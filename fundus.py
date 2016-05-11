@@ -1,6 +1,7 @@
 ##################################################################
-##  The primary code which will be run by a deamon on the rPI	##
 ##  OWL v2.1							##
+## ------------------------------------------------------------ ##
+##  Primary Author: Dhruv Joshi
 ##  Srujana Center for Innovation, LV Prasad Eye Institute	##
 ##  								##
 ##  This code will wait for an external button press, capture	##
@@ -16,7 +17,8 @@ import picamera
 import RPi.GPIO as GPIO
 
 # set the pins - names are based on the colours of the wires connecting to the LEDs
-orangeyellow = 14	# NOTE: this pin is active LOW, hence FALSE is ON
+# NOTE: Both the orangeyellow and bluegreen LEDs are active LOW, hence False is ON and vice versa
+orangeyellow = 14
 bluegreen  = 15
 switch = 18
 i=1	# initial_counter
@@ -27,9 +29,19 @@ GPIO.setup(switch, GPIO.IN, GPIO.PUD_UP)
 GPIO.setup(orangeyellow ,GPIO.OUT)
 GPIO.setup(bluegreen, GPIO.OUT)
 
-# setting white ON but IR off
-GPIO.output(orangeyellow, False)
-GPIO.output(bluegreen, False)
+# Defining functions for putting off each LED
+def normalON():
+    # orangeyellow is ON and the other is OFF
+    GPIO.output(orangeyellow, False)
+    GPIO.output(bluegreen, True)
+
+def secondaryON():
+    # toggle
+    GPIO.output(orangeyellow, True)
+    GPIO.output(bluegreen, False)
+    
+# Begin the polling for the switch
+normalON()
 
 with picamera.PiCamera() as camera:
     camera.resolution = (2592,1944);
@@ -39,14 +51,16 @@ with picamera.PiCamera() as camera:
              camera.start_preview()
              GPIO.wait_for_edge(switch,GPIO.RISING)
             
-	    # Button is pressed
-             GPIO.output(bluegreen, True)
-             GPIO.output(orangeyellow, False)
-             camera.capture('images/image'+str(i)+'.jpg',use_video_port=True)
+	     # Button is pressed
+             # First capture a picture with the first LED on
+             camera.capture('images/image' + str(i) + '_1.jpg', use_video_port=True)
 
-	    #Set the white LED OFF
-             GPIO.output(orangeyellow, True)
-             GPIO.output(bluegreen, False)
+             # Then capture with the second LED
+             secondaryON() 
+             camera.capture('images/image' + str(i) + '_2.jpg', use_video_port=True)
+
+	     # Reset LED states
+             normalON()
              camera.stop_preview()
              i=i+1
     except  KeyboardInterrupt: 
