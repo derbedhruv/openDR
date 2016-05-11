@@ -1,3 +1,16 @@
+##################################################################
+##  The primary code which will be run by a deamon on the rPI	##
+##  OWL v2.1							##
+##  Srujana Center for Innovation, LV Prasad Eye Institute	##
+##  								##
+##  This code will wait for an external button press, capture	##
+##  two images in rapid succession with two different white  	##
+##  LEDs, process them to remove glare computationally, send	##
+##  them to the theia algo backend to be processed, save them	##
+##  and return the score on-screen in human readable format.	##
+##								##
+##################################################################
+
 import time
 import picamera
 import RPi.GPIO as GPIO
@@ -15,9 +28,6 @@ GPIO.setup(switch, GPIO.IN, GPIO.PUD_UP)
 GPIO.setup(white,GPIO.OUT)
 GPIO.setup(IR, GPIO.OUT)
 
-
-    
-
 # setting white ON but IR off
 GPIO.output(white, False)
 GPIO.output(IR, True)
@@ -31,9 +41,6 @@ with picamera.PiCamera() as camera:
             # GPIO.output(IR, True)
              GPIO.wait_for_edge(switch,GPIO.RISING)
             
-            #if (GPIO.input(switch) != GPIO.HIGH) :
-            
-
 	    # The following stuff happens when the buton is pressed
              GPIO.output(IR, True)
              GPIO.output(white, False)
