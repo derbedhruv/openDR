@@ -43,7 +43,7 @@ def secondaryON():
 # Begin the polling for the switch
 normalON()
 
-with picamera.PiCamera(sensor_mode=2) as camera:
+with picamera.PiCamera(sensor_mode=3) as camera:
     camera.resolution =  camera.MAX_IMAGE_RESOLUTION
     try:
         while True:
