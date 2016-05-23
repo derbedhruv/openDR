@@ -43,8 +43,8 @@ def secondaryON():
 # Begin the polling for the switch
 normalON()
 
-with picamera.PiCamera() as camera:
-    camera.resolution = (2592,1944);
+with picamera.PiCamera(sensor_mode=2) as camera:
+    camera.resolution =  camera.MAX_IMAGE_RESOLUTION
     try:
         while True:
              filename = 'images/image',i,'.jpg'
@@ -53,11 +53,12 @@ with picamera.PiCamera() as camera:
             
 	     # Button is pressed
              # First capture a picture with the first LED on
-             camera.capture('images/image' + str(i) + '_1.jpg', use_video_port=True)
+			 # use_video_port=False enables capturing the image using the STILL port giving max resolution, instead of the video port. DO NOT CHANGE.
+             camera.capture('images/image' + str(i) + '_1.jpg', use_video_port=False)
 
              # Then capture with the second LED
              secondaryON() 
-             camera.capture('images/image' + str(i) + '_2.jpg', use_video_port=True)
+             camera.capture('images/image' + str(i) + '_2.jpg', use_video_port=False)
 
 	     # Reset LED states
              normalON()
