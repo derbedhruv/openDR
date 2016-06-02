@@ -1,7 +1,7 @@
-##################################################################
-##  OWL v2.1							##
+#################################################################
+##  OWL v2.2							##
 ## ------------------------------------------------------------ ##
-##  Primary Author: Dhruv Joshi
+##  Primary Author: Dhruv Joshi                                 ##
 ##  Srujana Center for Innovation, LV Prasad Eye Institute	##
 ##  								##
 ##  This code will wait for an external button press, capture	##
@@ -9,12 +9,51 @@
 ##  LEDs, process them to remove glare computationally, send	##
 ##  them to the theia algo backend to be processed, save them	##
 ##  and return the score on-screen in human readable format.	##
-##								##
+##                                                              ##        
+##  Code Contributors: Ayush Yadav, Devesh Jain, Ebin Philip    ##
 ##################################################################
 
 import time
 import picamera
 import pigpio
+import os
+from flask import Flask
+from flask import request
+from flask import render_template
+
+
+#Flask implementation starts here
+
+
+###processed_text = ''
+#create flask app
+app = Flask(__name__)
+
+#URL setter
+@app.route('/')
+def my_form():
+    return render_template("my-form.html")
+
+@app.route('/', methods=['POST'])
+def my_form_post():
+
+    text = request.form['text']
+    processed_text = text.upper()
+    make_a_dir(processed_text)
+    fundusRun(processed_text)
+    return text
+
+if __name__ == '__main__':
+    app.run()
+    
+    
+#make a directory of patient's name if it does not exist
+def make_a_dir(pr_t):
+    d= "/home/pi/Desktop/opendr/images/"+pr_t
+    if not os.path.exists(d):
+        os.mkdir(d)
+    
+
 
 # set the pins - names are based on the colours of the wires connecting to the LEDs
 # NOTE: Both the orangeyellow and bluegreen LEDs are active LOW, hence 0 is ON and vice versa
@@ -36,6 +75,7 @@ def normalON():
     # orangeyellow is ON and the other is OFF
     pi.write(orangeyellow,0)
     pi.write(bluegreen,1)
+    
 
 def secondaryON():
     # toggle
@@ -43,34 +83,37 @@ def secondaryON():
     pi.write(bluegreen,0)
     
 # Begin the polling for the switch
-normalON()
-with picamera.PiCamera() as camera:
-    camera.resolution =  camera.MAX_IMAGE_RESOLUTION
-    try:
+def fundusRun(pr_t):
+    normalON()
+    with picamera.PiCamera() as camera:
+        camera.resolution =  camera.MAX_IMAGE_RESOLUTION
+        try:
         
-        while True:
-                filename = 'images/image',i,'.jpg'
-                camera.start_preview()
-                time.sleep(0.01)
-                pi.wait_for_edge(switch,pigpio.RISING_EDGE)
+            while True:
+                    #filename = 'images/image',i,'.jpg'
+                    camera.start_preview()
+                    time.sleep(0.01)
+                    pi.wait_for_edge(switch,pigpio.RISING_EDGE)
              
-             # Button is pressed
-             # First capture a picture with the first LED on
-             # use_video_port=False enables capturing the image using the STILL port giving max resolution, instead of the video port. DO NOT CHANGE.
-                camera.capture('images/image' + str(i) + '_1.jpg', use_video_port=False)
+                 # Button is pressed
+                 # First capture a picture with the first LED on
+                 # use_video_port=False enables capturing the image using the STILL port giving max resolution, instead of the video port. DO NOT CHANGE.
+                    
+                    
+                    camera.capture('images/'+pr_t+'/' + str(i) + '_1.jpg', use_video_port=False)
 
-             # Then capture with the second LED
-                secondaryON() 
-                camera.capture('images/image' + str(i) + '_2.jpg', use_video_port=False)
-
-             # Reset LED states
-                normalON()
-                camera.stop_preview()
-                i=i+1
-    except  KeyboardInterrupt: 
-    #    except ValueError:
-        print 'Interrupted'
-        pi.write(orangeyellow,0)
-        pi.write(bluegreen,0)
-	camera.stop_preview()
-	pi.stop()
+                 # Then capture with the second LED
+                    secondaryON() 
+                    camera.capture('images/'+pr_t+'/' + str(i) + '_2.jpg', use_video_port=False)
+    
+                 # Reset LED states
+                    normalON()
+                    camera.stop_preview()
+                    i=i+1
+        except  KeyboardInterrupt: 
+        #   except ValueError:
+            print 'Interrupted'
+            pi.write(orangeyellow,0)
+            pi.write(bluegreen,0)
+            camera.stop_preview()
+            pi.stop()
