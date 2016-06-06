@@ -1,12 +1,59 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+<head>
+<style type="text/css" >
+#head_name{
+	position: relative;
+	padding-top: 20px;
+
+	text-align: center;
+	width: 100%;
+	font-family: helvetica;
+
+}
+.all{
+	position: relative;
+	text-align: center;
+	color: white;
+	font-family: helvetica;
+}
+#button_{
+	color: black;
+	border-style: solid;
+	border-radius: 3px;
+	margin-bottom: 20px;
+}
+#container_1{
+	background-color: #000033;
+	padding-bottom: 15px;
+	position: relative;
+	align-content: center;
+	height: 480px
+	width: 800px;
+	border-radius: 5px;
+	border-width: 3px;
+	border-style: solid;
+	border-color: orange;
+
+}
+#text_box{
+	border-radius: 5px;
+	box-shadow: none;
+	border-style: solid;
+
+}
+
+</style>
+</head>
+
 <body>
-    <h1>Enter Name</h1>
-    <h2>Images will be stored in that folder: </h2>
-    <form action="." method="POST">
-        <input type="text" name="text">
-        <input type="submit" name="my-form" value="Send">
+	<div id="container_1">
+    <h1 class="all" id="head_name">OWL </h1>
+    <h2 class="all" id="head_instru">Enter MR number</h2>
+    <form class="all" action="." method="POST">
+        <input class="all" id="text_box" type="text" name="text"> <br><br>
+        <input class="all" id="button_" type="submit" name="my-form" 1value="Send">
     </form>
+    </div>
 </body>
 </html>
-
