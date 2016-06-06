@@ -41,7 +41,7 @@ def my_form_post():
     processed_text = text.upper()
     make_a_dir(processed_text)
     fundusRun(processed_text)
-    return text
+    return redirect(url_for('captureSimpleFunc'))
 
 #captureSimple : to displey simple image    
 @app.route('/captureSimple', methods=['POST'])
