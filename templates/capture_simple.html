@@ -5,6 +5,10 @@
 	<title>Capture_Image</title>
 	<style type="text/css">
 		#flip_it{
+			color: black;
+			border-style: solid;
+			border-radius: 3px;
+			
 			padding-top: 30px;
 			padding-bottom: 30px;
 			float: left;
@@ -15,8 +19,15 @@
 			padding-top: 30px;
 			padding-bottom: 30px;
 			float: right;
-			vertical-align: center;
+			vertical-align: center;					
+			color: black;
+			border-style: solid;
+			border-radius: 3px;
+			
 
+		}
+		body{
+			background-color: #000033;
 		}
 
 
@@ -24,10 +35,13 @@
 </head>
 <body>
 	<div id="flip_"></div>
-	<form>
-		<input id="flip_it" type="submit" name="flip" value="Flip Image">
-		<input id="click_pic" type="submit" name="click_pic" value="Capture">
-	
+	<form class="all" method="POST" action=".">
+		<!--This for is for accepting Button click values for flip-->
+		<input id="flip_it" type="submit" name="flip" value="Flip">	
+	</form>
+	<form class="all" action="." method="POST"> 
+		<!--For Button response for Capturing image-->
+		<input id="click_pic" type="submit" name="click_pic" value="Capture" >
 	</form>
 
 

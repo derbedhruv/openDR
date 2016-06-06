@@ -1,9 +1,9 @@
-#################################################################
-##  OWL v2.2							##
+##################################################################
+##  OWL v2.3 beta					                      		##
 ## ------------------------------------------------------------ ##
 ##  Primary Author: Dhruv Joshi                                 ##
-##  Srujana Center for Innovation, LV Prasad Eye Institute	##
-##  								##
+##  Srujana Center for Innovation, LV Prasad Eye Institute	    ##
+##  								                            ##
 ##  This code will wait for an external button press, capture	##
 ##  two images in rapid succession with two different white  	##
 ##  LEDs, process them to remove glare computationally, send	##
@@ -16,13 +16,13 @@
 import time
 import picamera
 import pigpio
-import os
+import on-screen
 from flask import Flask
 from flask import request
 from flask import render_template
 
 
-#Flask implementation starts here
+#-------------------Flask implementation starts here--------------------#
 
 
 ###processed_text = ''
@@ -36,17 +36,51 @@ def my_form():
 
 @app.route('/', methods=['POST'])
 def my_form_post():
-
+    global processed_text
     text = request.form['text']
     processed_text = text.upper()
     make_a_dir(processed_text)
     fundusRun(processed_text)
     return text
 
+#captureSimple : to displey simple image    
+@app.route('/captureSimple', methods=['POST'])
+def captureSimpleFunc():
+    if flip=request.form(['flip']) == 'Flip' :
+        #Run command to flip the output
+        camera.vflip = !camera.vflip;
+        return redirect(url_for('captureSimpleFunc'))
+
+    elif capt=request.form(['click_pic']) == 'Capture':
+        #Run Function toggle capture image
+        take_a_pic(processed_text)
+        return redirect(url_for('captureSimpleFunc'))
+        
+    else:
+        return redirect(url_for('captureSimpleFunc'))
+
+
+
 if __name__ == '__main__':
     app.run()
+
+
+
+
+
+
+
+#..........Below this line, all the functions of the code lie.........#
+
+
+
+
+
+
     
-    
+
+
+
 #make a directory of patient's name if it does not exist
 def make_a_dir(pr_t):
     d= "/home/pi/Desktop/opendr/images/"+pr_t
@@ -82,6 +116,27 @@ def secondaryON():
     pi.write(orangeyellow,1)
     pi.write(bluegreen,0)
     
+
+
+#function for capturing HQ images
+def take_a_pic(pr_tx)
+{
+    
+    camera.capture('images/'+pr_tx+'/' + str(i) + '_1.jpg', use_video_port=False)
+
+ # Then capture with the second LED
+    secondaryON() 
+    camera.capture('images/'+pr_tx+'/' + str(i) + '_2.jpg', use_video_port=False)
+    
+ # Reset LED states
+    normalON()
+    camera.stop_preview()
+    i=i+1
+}
+
+
+
+
 # Begin the polling for the switch
 def fundusRun(pr_t):
     normalON()
@@ -92,24 +147,25 @@ def fundusRun(pr_t):
             while True:
                     #filename = 'images/image',i,'.jpg'
                     camera.start_preview()
+                    camera.vflip = False
                     time.sleep(0.01)
                     pi.wait_for_edge(switch,pigpio.RISING_EDGE)
-             
+                    take_a_pic(pr_t)
                  # Button is pressed
                  # First capture a picture with the first LED on
                  # use_video_port=False enables capturing the image using the STILL port giving max resolution, instead of the video port. DO NOT CHANGE.
                     
                     
-                    camera.capture('images/'+pr_t+'/' + str(i) + '_1.jpg', use_video_port=False)
+                 #    camera.capture('images/'+pr_t+'/' + str(i) + '_1.jpg', use_video_port=False)
 
-                 # Then capture with the second LED
-                    secondaryON() 
-                    camera.capture('images/'+pr_t+'/' + str(i) + '_2.jpg', use_video_port=False)
+                 # # Then capture with the second LED
+                 #    secondaryON() 
+                 #    camera.capture('images/'+pr_t+'/' + str(i) + '_2.jpg', use_video_port=False)
     
-                 # Reset LED states
-                    normalON()
-                    camera.stop_preview()
-                    i=i+1
+                 # # Reset LED states
+                 #    normalON()
+                 #    camera.stop_preview()
+                 #    i=i+1
         except  KeyboardInterrupt: 
         #   except ValueError:
             print 'Interrupted'
