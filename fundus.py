@@ -1,5 +1,5 @@
 ##################################################################
-##  OWL v2.3 beta					                      		##
+##  OWL v2.5					                      		##
 ## ------------------------------------------------------------ ##
 ##  Primary Author: Dhruv Joshi                                 ##
 ##  Srujana Center for Innovation, LV Prasad Eye Institute	    ##
@@ -16,10 +16,11 @@
 import time
 import picamera
 import pigpio
-import on-screen
+import os
 from flask import Flask
 from flask import request
 from flask import render_template
+from flask import redirect, session, g, url_for, flash
 
 
 #-------------------Flask implementation starts here--------------------#
@@ -32,7 +33,7 @@ app = Flask(__name__)
 #URL setter
 @app.route('/')
 def my_form():
-    return render_template("my-form.html")
+    return render_template("index.html")
 
 @app.route('/', methods=['POST'])
 def my_form_post():
@@ -40,18 +41,21 @@ def my_form_post():
     text = request.form['text']
     processed_text = text.upper()
     make_a_dir(processed_text)
-    fundusRun(processed_text)
     return redirect(url_for('captureSimpleFunc'))
+    #fundusRun(processed_text)
+    
 
 #captureSimple : to displey simple image    
 @app.route('/captureSimple', methods=['POST'])
 def captureSimpleFunc():
-    if flip=request.form(['flip']) == 'Flip' :
+    return render_template("capture_simple.html")
+    fundusRun(processed_text)
+    if request.form(['flip']) == 'Flip' :
         #Run command to flip the output
-        camera.vflip = !camera.vflip;
+        camera.vflip = not camera.vflip;
         return redirect(url_for('captureSimpleFunc'))
 
-    elif capt=request.form(['click_pic']) == 'Capture':
+    elif request.form(['click_pic']) == 'Capture':
         #Run Function toggle capture image
         take_a_pic(processed_text)
         return redirect(url_for('captureSimpleFunc'))
@@ -70,7 +74,7 @@ if __name__ == '__main__':
 
 
 
-#..........Below this line, all the functions of the code lie.........#
+#..........Below this line, all the functions not having flask lie.........#
 
 
 
@@ -83,7 +87,7 @@ if __name__ == '__main__':
 
 #make a directory of patient's name if it does not exist
 def make_a_dir(pr_t):
-    d= "/home/pi/Desktop/opendr/images/"+pr_t
+    d= "/home/pi/openDR/images/"+pr_t
     if not os.path.exists(d):
         os.mkdir(d)
     
@@ -119,9 +123,7 @@ def secondaryON():
 
 
 #function for capturing HQ images
-def take_a_pic(pr_tx)
-{
-    
+def take_a_pic(pr_tx):    
     camera.capture('images/'+pr_tx+'/' + str(i) + '_1.jpg', use_video_port=False)
 
  # Then capture with the second LED
@@ -132,7 +134,7 @@ def take_a_pic(pr_tx)
     normalON()
     camera.stop_preview()
     i=i+1
-}
+
 
 
 
@@ -146,7 +148,7 @@ def fundusRun(pr_t):
         
             while True:
                     #filename = 'images/image',i,'.jpg'
-                    camera.start_preview()
+                    #camera.start_preview()
                     camera.vflip = False
                     time.sleep(0.01)
                     pi.wait_for_edge(switch,pigpio.RISING_EDGE)
