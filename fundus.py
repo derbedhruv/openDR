@@ -21,6 +21,10 @@ from flask import Flask
 from flask import request
 from flask import render_template
 from flask import redirect, session, g, url_for, flash
+# from camerax import VideoCamera
+from flask import Response
+from Fundus_Cam import Fundus_Cam
+
 
 
 #-------------------Flask implementation starts here--------------------#
@@ -45,6 +49,8 @@ def my_form_post():
     #fundusRun(processed_text)
     
 
+
+
 #captureSimple : to displey simple image    
 @app.route('/captureSimple', methods=['POST'])
 def captureSimpleFunc():
@@ -64,6 +70,21 @@ def captureSimpleFunc():
         return redirect(url_for('captureSimpleFunc'))
 
 
+#Cam flask routes -----------------------#-------------------------------
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(gen(VideoCamera()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+def gen(Fundus_Cam):
+    while True:
+        frame = Fundus_Cam.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+
+#main--------------------#
 
 if __name__ == '__main__':
     app.run()
