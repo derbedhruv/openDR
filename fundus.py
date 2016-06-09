@@ -52,7 +52,7 @@ def my_form_post():
 
 
 #captureSimple : to displey simple image    
-@app.route('/captureSimple', methods=['POST'])
+@app.route('/captureSimple', methods=['GET'])
 def captureSimpleFunc():
     return render_template("capture_simple.html")
     fundusRun(processed_text)
@@ -74,7 +74,7 @@ def captureSimpleFunc():
 
 @app.route('/video_feed')
 def video_feed():
-    return Response(gen(VideoCamera()),
+    return Response(gen(Fundus_Cam()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def gen(Fundus_Cam):
