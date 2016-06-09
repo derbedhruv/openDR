@@ -67,7 +67,7 @@ class Fundus_Cam(object):
 if __name__=='__main__':
     
     fundus_cam=Fundus_Cam((640,480),32,True).start()
-    # this part of the code is for debugging and testing the Fundus_Cam class
+    ## this part of the code is for debugging and testing the Fundus_Cam class
     while True:
        image=fundus_cam.read()
        cv2.imshow('window',image)
