@@ -1,6 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+	<!-- Not all files kept in the /css and /js folder are used -->	
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/font-awesome.min.css" rel="stylesheet">
+	<link href="css/demo.css" rel="stylesheet">
+
+	<!-- jQuery & jQuery UI + theme (required) -->
+	<link href="css/jquery-ui.min.css" rel="stylesheet">
+	<script src="js/jquery-latest.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+	<!-- keyboard widget css & script (required) -->
+	<link href="css/keyboard.css" rel="stylesheet">
+	<script src="js/jquery.keyboard.js"></script>
+
+	<!-- keyboard extensions (optional) -->
+	<script src="js/jquery.mousewheel.js"></script>
+	<!--
+	<script src="../js/jquery.keyboard.extension-typing.js"></script>
+	<script src="../js/jquery.keyboard.extension-autocomplete.js"></script>
+	-->
+
+	<!-- initialize keyboard (required) -->
+	<script>
+		$(function(){
+			$('#keyboard').keyboard();
+		});
+	</script>
+
+
+
+<!--
 <style type="text/css" >
 #head_name{
 	position: relative;
@@ -36,14 +69,14 @@
 	border-color: orange;
 
 }
-#text_box{
+/*#text_box{
 	border-radius: 5px;
 	box-shadow: none;
 	border-style: solid;
-
+*/
 }
 
-</style>
+</style> -->
 </head>
 
 <body>
@@ -51,8 +84,17 @@
     <h1 class="all" id="head_name">OWL </h1>
     <h2 class="all" id="head_instru">Enter MR number</h2>
     <form class="all" action="." method="POST">
-        <input class="all" id="text_box" type="text" name="text"> <br><br>
-        <input class="all" id="button_" type="submit" name="my-form" 1value="Send">
+
+	</div><!-- 
+		<input id="keyboard" type="text" class="ui-keyboard-input ui-widget-content ui-corner-all" aria-haspopup="true" role="textbox" >
+        <input id="keyboard" type="text" > <br><br> -->
+        <div id="wrap"> <!-- wrapper only needed to center the input -->
+
+		<!-- keyboard input -->
+		<input id="keyboard" type="text" name="text"><br><br>
+		<input class="all" id="button_" type="submit" name="my-form" 1value="Send">
+	</div> <!-- End wrapper -->
+        
     </form>
     </div>
 </body>
