@@ -1,0 +1,6 @@
+#ignore images folder
+/images/*
+!/images/Folder_Readme.md
+
+fundus.pyc
+Fundus_Cam.pyc

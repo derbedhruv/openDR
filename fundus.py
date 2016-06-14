@@ -1,9 +1,9 @@
 ##################################################################
-##  OWL v2.5					                      		##
+##  OWL v2.6					                ##      		##
 ## ------------------------------------------------------------ ##
 ##  Primary Author: Dhruv Joshi                                 ##
-##  Srujana Center for Innovation, LV Prasad Eye Institute	    ##
-##  								                            ##
+##  Srujana Center for Innovation, LV Prasad Eye Institute	##
+##  								##                            ##
 ##  This code will wait for an external button press, capture	##
 ##  two images in rapid succession with two different white  	##
 ##  LEDs, process them to remove glare computationally, send	##
@@ -11,6 +11,8 @@
 ##  and return the score on-screen in human readable format.	##
 ##                                                              ##        
 ##  Code Contributors: Ayush Yadav, Devesh Jain, Ebin Philip    ##
+##                                                              ##
+##  New in 2.6 :  Path corrected and Onscreen keyboard added    ##
 ##################################################################
 
 import time
@@ -108,7 +110,7 @@ if __name__ == '__main__':
 
 #make a directory of patient's name if it does not exist
 def make_a_dir(pr_t):
-    d= "/home/pi/openDR/images/"+pr_t
+    d= os.path.dirname(__file__)+"/images/"+pr_t
     if not os.path.exists(d):
         os.mkdir(d)
     
