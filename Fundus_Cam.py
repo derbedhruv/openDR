@@ -3,6 +3,7 @@ from picamera import PiCamera
 from threading import Thread
 import cv2
 import numpy as np
+import io
 
 class Fundus_Cam(object):
     def __init__(self, resolution=(320, 240), framerate=32,preview=False):
@@ -24,39 +25,52 @@ class Fundus_Cam(object):
             
         self.stopped = False
 
-    def start(self):
-        # starts a new thread, which runs the update()
-        Thread(target=self.update, args=()).start()
-        return self
-
-    # continuosly grabs frames from the camera, in a seperate thread
-    def update(self):
-        # keep looping infinitely until the thread is stopped
-        for f in self.stream:
-                # grab the frame from the stream and clear the stream in
-                # preparation for the next frame
-                self.frame = f.array
-                self.rawCapture.truncate(0)
-
-                # if the thread indicator variable is set, stop the thread
-                # and resource camera resources
-                if self.stopped:
-                        #cv2.destroyAllWindows()
-                        self.stream.close()
-                        self.rawCapture.close()
-                        self.camera.close()
-                        return
+##    def start(self):
+##        # starts a new thread, which runs the update()
+##        Thread(target=self.update, args=()).start()
+##        return self
+##
+##    # continuosly grabs frames from the camera, in a seperate thread
+##    def update(self):
+##        # keep looping infinitely until the thread is stopped
+##        for f in self.stream:
+##                # grab the frame from the stream and clear the stream in
+##                # preparation for the next frame
+##                self.frame = f.array
+##                self.rawCapture.truncate(0)
+##
+##                # if the thread indicator variable is set, stop the thread
+##                # and resource camera resources
+##                if self.stopped:
+##                        #cv2.destroyAllWindows()
+##                        self.stream.close()
+##                        self.rawCapture.close()
+##                        self.camera.close()
+##                        return
     # to return the last grabbed frame
     def read(self):
         return self.frame
 
+    def flip_cam(self,state):
+        self.camera.vflip=state
+
     #to capture and store images 
-    def capture_image(self,name,no):
-        self.camera.capture('images/image' + str(name) + '_'+str(no)+'.jpg', use_video_port=False)
+    def capture_image(self,img_stream):
+        camera.capture(img_stream,format='jpeg',use_video_port=True)
+        self.image=np.fromstring(img_stream.getvalue(),dtype=np.uint8)
+        img_stream.truncate()
+        return image
+        
         
 
     #returns the last grabbed frame in JPEG
     def get_frame(self):
+        for f in self.stream:
+##                # grab the frame from the stream and clear the stream in
+##                # preparation for the next frame
+                self.frame = f.array
+                self.rawCapture.truncate(0)
+                break
         
         self.ret, self.jpeg = cv2.imencode('.jpg', self.frame)
         return self.jpeg.tobytes()
