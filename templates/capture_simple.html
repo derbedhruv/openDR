@@ -11,6 +11,8 @@
 			clear: left;
 			padding-top: 30px;
 			padding-bottom: 30px;
+			padding-left: 10px;
+			padding-right: 10px;
 			float: left;
 			vertical-align: center;
 
@@ -18,7 +20,23 @@
 		#click_pic{
 			padding-top: 30px;
 			padding-bottom: 30px;
+
 			float: right;
+			vertical-align: center;					
+			color: black;
+			border-style: solid;
+			border-radius: 3px;
+			clear: right;
+
+		}
+		#exit{
+			padding-top: 30px;
+			padding-bottom: 30px;
+			padding-right: 10px;
+			padding-left: 10px;
+			margin-top: 20px;	
+			float: right;
+			display: inline-block;
 			vertical-align: center;					
 			color: black;
 			border-style: solid;
@@ -31,7 +49,7 @@
 		}
 		#video_frame{
 			float: left;
-			
+						
 		}
 
 
@@ -47,15 +65,20 @@
 	<div>
 		<!--this div will have the live stream from the video-->
 
-    	<img id="video_frame" height="480" width="640" id="bg" src="{{ url_for('video_feed') }}">
+    	<img id="video_frame" height="480" width="600" id="bg" src="{{ url_for('video_feed') }}">
 
 	</div>
 	<div>
 	<form class="all" action="." method="POST"> 
 		<!--For Button response for Capturing image-->
-		<input id="click_pic" type="submit" name="click_pic" value="Capture" >
+		<input id="click_pic" type="submit" name="click_pic" value="Click" >
 	</form>
 	</div>
-
+	<div>
+	<form class="all" action="." method="POST"> 
+		<!--For Button response for Capturing image-->
+		<input id="exit" type="submit" name="exit" value="Exit" >
+	</form>
+	</div>
 </body>
 </html>
