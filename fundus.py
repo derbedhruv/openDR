@@ -28,7 +28,6 @@ from flask import Response
 from Fundus_Cam import Fundus_Cam
 
 
-
 #-------------------Flask implementation starts here--------------------#
 
 
@@ -47,6 +46,7 @@ def my_form_post():
     text = request.form['text']
     processed_text = text.upper()
     make_a_dir(processed_text)
+    obj_fc = Fundus_Cam()
     return redirect(url_for('captureSimpleFunc'))
     #fundusRun(processed_text)
     
@@ -56,11 +56,10 @@ def my_form_post():
 #captureSimple : to displey simple image    
 @app.route('/captureSimple', methods=['GET'])
 def captureSimpleFunc():
-    return render_template("capture_simple.html")
-    fundusRun(processed_text)
+#    fundusRun(processed_text)
     if request.form(['flip']) == 'Flip' :
         #Run command to flip the output
-        camera.vflip = not camera.vflip;
+        obj_fc.flip_cam()
         return redirect(url_for('captureSimpleFunc'))
 
     elif request.form(['click_pic']) == 'Capture':
@@ -74,16 +73,16 @@ def captureSimpleFunc():
 
 #Cam flask routes -----------------------#-------------------------------
 
-@app.route('/video_feed')
-def video_feed():
-    return Response(gen(Fundus_Cam()),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
-
-def gen(Fundus_Cam):
-    while True:
-        frame = Fundus_Cam.get_frame()
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+#@app.route('/video_feed')
+#def video_feed():
+#    return Response(gen(Fundus_Cam()),
+#                    mimetype='multipart/x-mixed-replace; boundary=frame')
+#
+#def gen(Fundus_Cam):
+#    while True:
+#        frame = Fundus_Cam.get_frame()
+#        yield (b'--frame\r\n'
+#               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
 
 #main--------------------#
@@ -96,16 +95,7 @@ if __name__ == '__main__':
 
 
 
-
 #..........Below this line, all the functions not having flask lie.........#
-
-
-
-
-
-
-    
-
 
 
 #make a directory of patient's name if it does not exist
@@ -146,18 +136,18 @@ def secondaryON():
 
 
 #function for capturing HQ images
-def take_a_pic(pr_tx):    
-    camera.capture('images/'+pr_tx+'/' + str(i) + '_1.jpg', use_video_port=False)
-
- # Then capture with the second LED
-    secondaryON() 
-    camera.capture('images/'+pr_tx+'/' + str(i) + '_2.jpg', use_video_port=False)
-    
- # Reset LED states
-    normalON()
-    camera.stop_preview()
-    i=i+1
-
+##def take_a_pic(pr_tx):    
+##    camera.capture('images/'+pr_tx+'/' + str(i) + '_1.jpg', use_video_port=False)
+##
+## # Then capture with the second LED
+##    secondaryON() 
+##    camera.capture('images/'+pr_tx+'/' + str(i) + '_2.jpg', use_video_port=False)
+##    
+## # Reset LED states
+##    normalON()
+##    camera.stop_preview()
+##    i=i+1
+##
 
 
 
@@ -165,32 +155,33 @@ def take_a_pic(pr_tx):
 # Begin the polling for the switch
 def fundusRun(pr_t):
     normalON()
-    with picamera.PiCamera() as camera:
-        camera.resolution =  camera.MAX_IMAGE_RESOLUTION
-        try:
-        
-            while True:
-                    #filename = 'images/image',i,'.jpg'
-                    #camera.start_preview()
-                    camera.vflip = False
-                    time.sleep(0.01)
-                    pi.wait_for_edge(switch,pigpio.RISING_EDGE)
-                    take_a_pic(pr_t)
-                 # Button is pressed
-                 # First capture a picture with the first LED on
-                 # use_video_port=False enables capturing the image using the STILL port giving max resolution, instead of the video port. DO NOT CHANGE.
-                    
-                    
-                 #    camera.capture('images/'+pr_t+'/' + str(i) + '_1.jpg', use_video_port=False)
-
-                 # # Then capture with the second LED
-                 #    secondaryON() 
-                 #    camera.capture('images/'+pr_t+'/' + str(i) + '_2.jpg', use_video_port=False)
     
-                 # # Reset LED states
-                 #    normalON()
-                 #    camera.stop_preview()
-                 #    i=i+1
+##    with picamera.PiCamera() as camera:
+##        camera.resolution =  camera.MAX_IMAGE_RESOLUTION
+##        try:
+##        
+##            while True:
+##                    #filename = 'images/image',i,'.jpg'
+##                    #camera.start_preview()
+##                    camera.vflip = False
+##                    time.sleep(0.01)
+##                    pi.wait_for_edge(switch,pigpio.RISING_EDGE)
+##                    take_a_pic(pr_t)
+##                 # Button is pressed
+##                 # First capture a picture with the first LED on
+##                 # use_video_port=False enables capturing the image using the STILL port giving max resolution, instead of the video port. DO NOT CHANGE.
+##                    
+##                    
+##                 #    camera.capture('images/'+pr_t+'/' + str(i) + '_1.jpg', use_video_port=False)
+##
+##                 # # Then capture with the second LED
+##                 #    secondaryON() 
+##                 #    camera.capture('images/'+pr_t+'/' + str(i) + '_2.jpg', use_video_port=False)
+##    
+##                 # # Reset LED states
+##                 #    normalON()
+##                 #    camera.stop_preview()
+##                 #    i=i+1
         except  KeyboardInterrupt: 
         #   except ValueError:
             print 'Interrupted'
