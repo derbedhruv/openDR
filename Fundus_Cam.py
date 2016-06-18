@@ -6,89 +6,93 @@ import numpy as np
 import io
 
 class Fundus_Cam(object):
-    def __init__(self, resolution=(320, 240), framerate=32,preview=False):
+    def __init__(self, framerate=12,preview=False):
         # initialize the camera and stream
         self.camera = PiCamera()
-        self.camera.resolution = resolution
+        self.camera.resolution = self.camera.MAX_IMAGE_RESOLUTION
         self.camera.framerate = framerate
-        self.rawCapture = PiRGBArray(self.camera, size=resolution)
-        self.stream = self.camera.capture_continuous(self.rawCapture,format="bgr", use_video_port=True)
-    
-       # initialize self.frame by grabbing one frame from the camera 
-        
-        for f in self.stream:
-                # grab the frame from the stream and clear the stream in
-                # preparation for the next frame
-                self.frame = f.array
-                self.rawCapture.truncate(0)
-                break
-            
+        self.stream = io.BytesIO()
+        self.flip_state=False
+
+        self.images=[]
+        self.camera.start_preview()
         self.stopped = False
 
-##    def start(self):
-##        # starts a new thread, which runs the update()
-##        Thread(target=self.update, args=()).start()
-##        return self
-##
-##    # continuosly grabs frames from the camera, in a seperate thread
-##    def update(self):
-##        # keep looping infinitely until the thread is stopped
-##        for f in self.stream:
-##                # grab the frame from the stream and clear the stream in
-##                # preparation for the next frame
-##                self.frame = f.array
-##                self.rawCapture.truncate(0)
-##
-##                # if the thread indicator variable is set, stop the thread
-##                # and resource camera resources
-##                if self.stopped:
-##                        #cv2.destroyAllWindows()
-##                        self.stream.close()
-##                        self.rawCapture.close()
-##                        self.camera.close()
-##                        return
-    # to return the last grabbed frame
-    def read(self):
-        return self.frame
+    def continuous_capture(self):
+        # starts a new thread, which runs the update()
+        self.stopped = False
+        Thread(target=self.update, args=()).start()
+        
 
-    def flip_cam(self,state):
-        self.camera.vflip=state
+    # continuosly grabs frames from the camera, in a seperate thread
+    def update(self):
+        # keep looping infinitely until the thread is stopped
+        while True:
+                # grab the frame from the stream and clear the stream in
+                # preparation for the next frame
+                self.camera.capture(self.stream,format='jpeg',use_video_port=True)
+                self.images.append(np.fromstring(self.stream.getvalue(),dtype=np.uint8))
+                self.stream.truncate()
+                self.stream.seek(0)
+                if(len(self.images)>9):
+                    self.stopped=True
+                    return
+##                
+    
+
+    def flip_cam():
+        self.camera.vflip=(not self.flip_state)
 
     #to capture and store images 
-    def capture_image(self,img_stream):
-        camera.capture(img_stream,format='jpeg',use_video_port=True)
-        self.image=np.fromstring(img_stream.getvalue(),dtype=np.uint8)
-        img_stream.truncate()
-        return image
-        
-        
+    def capture(self):
+        self.camera.capture(self.stream,format='jpeg',use_video_port=True)
+        self.image=np.fromstring(self.stream.getvalue(),dtype=np.uint8)
+        self.stream.truncate()
+        self.stream.seek(0)
+        return self.image
 
-    #returns the last grabbed frame in JPEG
-    def get_frame(self):
-        for f in self.stream:
-##                # grab the frame from the stream and clear the stream in
-##                # preparation for the next frame
-                self.frame = f.array
-                self.rawCapture.truncate(0)
-                break
-        
-        self.ret, self.jpeg = cv2.imencode('.jpg', self.frame)
-        return self.jpeg.tobytes()
+    def preview(self):
+        self.camera.start_preview()
+    def stop_preview(self):
+        self.camera.stop_preview()
     
     def stop(self):
         self.stopped=True
 
+def decode_image(images):
+    name=raw_input("enter the name to be saved")
+    if type(images) is list:
+        no=1
+        for img in images:
+            image=cv2.imdecode(img,1)
+            #image=get_fundus(image)
+            cv2.imwrite('images/test/' + name + '_'+str(no)+'.jpg',image)
+            no=no+1
+    else:
+        image=cv2.imdecode(images,1)
+        #image=get_fundus(image)
+        cv2.imwrite('images/test/' + name + '.jpg',image)
+            
+        
+
+
 if __name__=='__main__':
     
-    fundus_cam=Fundus_Cam((640,480),32,True).start()
+    fundus_cam=Fundus_Cam()
     ## this part of the code is for debugging and testing the Fundus_Cam class
-    while True:
-       image=fundus_cam.read()
-       cv2.imshow('window',image)
-       key=cv2.waitKey(1)
-       if key==27:
-           break
-    fundus_cam.stop()
-    cv2.destroyAllWindows()
+    image=fundus_cam.capture()
+    raw_input("start continuous??")
+    fundus_cam.continuous_capture()
+    while not fundus_cam.stopped:
+        pass
+    print "decoding still"
+    decode_image(image)
+    print "decoding continuous capture"
+    decode_image(fundus_cam.images)
+    fundus_cam.stop_preview()
+    
+    
+        
+    
 
     
