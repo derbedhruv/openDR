@@ -47,28 +47,30 @@ def my_form_post():
     processed_text = text.upper()
     make_a_dir(processed_text)
     obj_fc = Fundus_Cam()
-    return redirect(url_for('captureSimpleFunc'))
-    #fundusRun(processed_text)
-    
+    return redirect(url_for('loadSimple'))
 
-
+@app.route('/captureSimple')
+def loadSimple():
+    return render_template('capture_simple.html')    
 
 #captureSimple : to displey simple image    
-@app.route('/captureSimple', methods=['GET'])
+@app.route('/captureSimple', methods=['GET','POST'])
 def captureSimpleFunc():
-#    fundusRun(processed_text)
-    if request.form(['flip']) == 'Flip' :
-        #Run command to flip the output
-        obj_fc.flip_cam()
-        return redirect(url_for('captureSimpleFunc'))
-
-    elif request.form(['click_pic']) == 'Capture':
-        #Run Function toggle capture image
-        take_a_pic(processed_text)
-        return redirect(url_for('captureSimpleFunc'))
-        
-    else:
-        return redirect(url_for('captureSimpleFunc'))
+    
+    if request.form['Flip']=='Flip'
+	obj_fc.flip-cam()
+        return render_template('capture_simple.html')
+    if request.form['Click']=='Click' :
+        obj_fc.capture()
+	return render_template('capture_simple.html')
+    if request.form['Vid']=='Vid':
+	obj_fc.continuous_capture()
+	return render_template('capture_simple.html')
+    if request.form['Vid']=='Vid':
+	obj_fc.stop_preview()
+	obj_fc.stop()
+	return render_template('index.html')
+    return render_template('capture_simple.html')
 
 
 #Cam flask routes -----------------------#-------------------------------
@@ -88,7 +90,7 @@ def captureSimpleFunc():
 #main--------------------#
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug = True)
 
 
 
@@ -153,9 +155,9 @@ def secondaryON():
 
 
 # Begin the polling for the switch
-def fundusRun(pr_t):
-    normalON()
-    
+##def fundusRun(pr_t):
+##    normalON()
+##    
 ##    with picamera.PiCamera() as camera:
 ##        camera.resolution =  camera.MAX_IMAGE_RESOLUTION
 ##        try:
@@ -182,10 +184,10 @@ def fundusRun(pr_t):
 ##                 #    normalON()
 ##                 #    camera.stop_preview()
 ##                 #    i=i+1
-        except  KeyboardInterrupt: 
-        #   except ValueError:
-            print 'Interrupted'
-            pi.write(orangeyellow,0)
-            pi.write(bluegreen,0)
-            camera.stop_preview()
-            pi.stop()
+##        except  KeyboardInterrupt: 
+##        #   except ValueError:
+##            print 'Interrupted'
+##            pi.write(orangeyellow,0)
+##            pi.write(bluegreen,0)
+##            camera.stop_preview()
+##            pi.stop()
