@@ -1,9 +1,9 @@
 ##################################################################
-##  OWL v2.6					                ##      		##
+##  OWL v2.7					                        		##
 ## ------------------------------------------------------------ ##
 ##  Primary Author: Dhruv Joshi                                 ##
-##  Srujana Center for Innovation, LV Prasad Eye Institute	##
-##  								##                            ##
+##  Srujana Center for Innovation, LV Prasad Eye Institute	    ##
+##  								                            ##
 ##  This code will wait for an external button press, capture	##
 ##  two images in rapid succession with two different white  	##
 ##  LEDs, process them to remove glare computationally, send	##
@@ -23,7 +23,7 @@ from flask import Flask
 from flask import request
 from flask import render_template
 from flask import redirect, session, g, url_for, flash
-# from camerax import VideoCamera
+
 from flask import Response
 from Fundus_Cam import Fundus_Cam
 
@@ -31,7 +31,6 @@ from Fundus_Cam import Fundus_Cam
 #-------------------Flask implementation starts here--------------------#
 
 
-###processed_text = ''
 #create flask app
 app = Flask(__name__)
 
@@ -40,6 +39,7 @@ app = Flask(__name__)
 def my_form():
     return render_template("index.html")
 
+#MR number input is accepted here
 @app.route('/', methods=['POST'])
 def my_form_post():
     global processed_text
@@ -56,20 +56,25 @@ def loadSimple():
 #captureSimple : to displey simple image    
 @app.route('/captureSimple', methods=['GET','POST'])
 def captureSimpleFunc():
-    
+    #If flip button pressed
     if request.form['Flip']=='Flip'
 	obj_fc.flip-cam()
         return render_template('capture_simple.html')
+    
+    #if 'Click' button pressed
     if request.form['Click']=='Click' :
         obj_fc.capture()
-	return render_template('capture_simple.html')
+
+    #if 'Video' has to be taken and 'Vid' button is pressed
     if request.form['Vid']=='Vid':
 	obj_fc.continuous_capture()
 	return render_template('capture_simple.html')
-    if request.form['Vid']=='Vid':
-	obj_fc.stop_preview()
-	obj_fc.stop()
-	return render_template('index.html')
+    
+    if request.form['stop']=='stop':
+	   obj_fc.stop_preview()
+	   obj_fc.stop()
+	   return render_template('index.html')
+    
     return render_template('capture_simple.html')
 
 
