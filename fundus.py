@@ -75,13 +75,13 @@ def captureSimpleFunc():
     
     #if stop button is pressed
     if request.form['stop']=='stop':
-    	   if obj_state == True:
+    	if obj_state == True:
             obj_fc.stop_preview()
-        	   obj_fc.stop()
-               obj_state=False
-            else:
-                obj_fc.Fundus_Cam()
-                obj_state==True
+            obj_fc.stop()
+            obj_state=False
+        else:
+            obj_fc.Fundus_Cam()
+            obj_state==True
 
 	   return render_template('index.html')
     if request.form['shutd']=='shutd':
