@@ -1,0 +1,235 @@
+<!-- Still have to comment stuff here -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Capture_Image</title>
+	<style type="text/css">
+		#flip_it{
+			
+
+		}
+		#left_{
+			float: left;
+			position: absolute;
+			align-items: left;
+		}
+		#right_{
+			float: right;
+			position: absolute;
+			align-items: right;
+
+		}
+		#left_tb{
+			float: left;
+			height: 96px;
+			width: 80px;
+		}
+		#right_tb{
+			float: right;
+			height: 96px;
+			width: 80px;
+		}
+		#buttsLeft{
+		}
+		#buttsRight{
+		
+		}
+		body{
+			background-color: #000000;
+		}
+
+
+	</style>
+</head>
+<body>
+
+<form class="all" method="POST" >
+<!-- 
+<table>
+	<tr>
+		<td class="left_tb">
+				<input class="buttsLeft" type="image" src="{{ url_for('static',filename='flipICO.jpg')}}" alt="submit" name="Flip" value="Flip" >
+		<td rowspan="5"	>
+				<img src="{{ url_for('static',filename='owlLogo.jpg')}}" height="480px" width="640px" style="align: middle; ">
+		</td>
+		<td class="right_tb">
+				<input class="buttsRight" type="image" src="{{ url_for('static',filename='shutICO.jpg')}}" name="shutd" value="shutd">
+		</td>
+	</tr>
+	<tr>
+		<td class="left_tb">
+				<input class="buttsRight" type="image" src="{{ url_for('static',filename='powICO.jpg')}}" alt="submit" name="Exit" value="Exit" >
+		</td>
+		<td class="right_tb">
+				<input class="buttsRight" type="image" src="{{ url_for('static',filename='vidICO.jpg')}}" alt="submit" name="Vid" value="Vid" >
+		</td>
+		
+	</tr>
+	<tr>
+		<td class="left_tb">
+				<input class="buttsLeft" type="image" src="{{ url_for('static',filename='camICO.jpg')}}" alt="submit" name="Click" value="Click" >
+		
+		</td>
+		<td class="right_tb">
+				<input class="buttsLeft" type="image" src="{{ url_for('static',filename='camICO.jpg')}}" alt="submit" name="Click" value="Click" >
+		
+		</td>
+		
+	</tr>		
+	<tr>
+		<td class="left_tb">
+				<input class="buttsRight" type="image" src="{{ url_for('static',filename='vidICO.jpg')}}" alt="submit" name="Vid" value="Vid" >
+		</td>
+		<td class="right_tb">
+				<input class="buttsRight" type="image" src="{{ url_for('static',filename='powICO.jpg')}}" alt="submit" name="Exit" value="Exit" ><
+		</td>
+	</tr>
+	<tr>
+		<td class="left_tb">
+				<input class="buttsRight" type="image" src="{{ url_for('static',filename='shutICO.jpg')}}" name="shutd" value="shutd">
+		</td>
+		<td class="right_tb">
+				<input class="buttsLeft" type="image" src="{{ url_for('static',filename='flipICO.jpg')}}" alt="submit" name="Flip" value="Flip" >
+				
+		</td>
+	</tr>
+
+</table>
+ -->
+ <table>
+	<tr>
+		<td class="left_tb">
+				<input class="buttsLeft" type="submit" name="Flip" value="Flip" >
+		<td rowspan="5"	>
+				<img src="{{ url_for('static',filename='owlLogo.jpg')}}" height="480px" width="640px" style="align: middle; ">
+		</td>
+		<td class="right_tb">
+				<input class="buttsRight" type="submit" name="shutd" value="shutd">
+		</td>
+	</tr>
+	<tr>
+		<td class="left_tb">
+				<input class="buttsRight" type="submit" name="Exit" value="Exit" >
+		</td>
+		<td class="right_tb">
+				<input class="buttsRight" type="submit" name="Vid" value="Vid" >
+		</td>
+		
+	</tr>
+	<tr>
+		<td class="left_tb">
+				<input class="buttsLeft" type="submit" name="Click" value="Click" >
+		
+		</td>
+		<td class="right_tb">
+				<input class="buttsLeft" type="submit" name="Click" value="Click" >
+		
+		</td>
+		
+	</tr>		
+	<tr>
+		<td class="left_tb">
+				<input class="buttsRight" type="submit" name="Vid" value="Vid" >
+		</td>
+		<td class="right_tb">
+				<input class="buttsRight" type="submit" name="Exit" value="Exit" ><
+		</td>
+	</tr>
+	<tr>
+		<td class="left_tb">
+				<input class="buttsRight" type="submit" name="shutd" value="shutd">
+		</td>
+		<td class="right_tb">
+				<input class="buttsLeft" type="submit" name="Flip" value="Flip" >
+				
+		</td>
+	</tr>
+
+</table>
+</form>
+
+
+
+<!-- 
+	<div id="left_">
+	<form class="all" method="POST"> -->
+		<!--This for is for accepting Button click values for flip-->
+		<!-- <input class="buttsLeft" type="submit" name="Power" value="Power">
+		<input class="buttsLeft" type="image" src="image/camICO.jpg" alt="submit" name="Click" value="Click" >
+		<input class="buttsLeft" type="image" src="image/vidICO.jpg" alt="submit" name="Vid" value="Vid" >
+		<input class="buttsLeft" type="image" src="image/flipICO.jpg" alt="submit" name="Flip" value="Flip" >
+		<input class="buttsLeft" type="image" src="image/powICO.jpg" alt="submit" name="Exit" value="Exit" >	
+
+	</form>
+	<div id="right_">
+	<img src="image/owlLogo.jpg" height="480px" width="640px" style="align: middle; ">
+	<form class="all" method="POST"> -->
+		<!--This for is for accepting Butt click values for flip-->
+		<!-- <input class="buttsRight" type="image" src="image/powICO.jpg" alt="submit" name="Exit" value="Exit" ><br>
+		<input class="buttsRight" type="image" src="image/flipICO.jpg" alt="submit" name="Flip" value="Flip" >	<br>
+		<input class="buttsRight" type="image" src="image/vidICO.jpg" alt="submit" name="Vid" value="Vid" ><br>
+		<input class="buttsRight" type="image" src="image/camICO.jpg" alt="submit" name="Click" value="Click" ><br>
+		<input class="buttsRight" type="submit" name="Power" value="Power">
+	</form>
+
+	</div> -->
+
+</body>
+</html>
+
+
+
+<!-- 
+<form class="all" method="POST">
+<table>
+	<tr>
+		<td class="left_tb">
+				<input class="buttsRight" type="image" src="image/powICO.jpg" alt="submit" name="Exit" value="Exit" >
+		</td>
+		<td>
+				<img src="image/owlLogo.jpg" height="480px" width="640px" style="align: middle; ">
+		</td>
+		<td class="right_tb">
+				<input class="buttsRight" type="submit" name="Power" value="Power">
+		</td>
+	</tr>
+	<tr>
+		<td class="left_tb">
+				<input class="buttsRight" type="image" src="image/powICO.jpg" alt="submit" name="Exit" value="Exit" >
+		</td>
+		<td class="right_tb">
+				<input class="buttsLeft" type="image" src="image/camICO.jpg" alt="submit" name="Click" value="Click" >
+		</td>
+		
+	</tr>
+	<tr>
+		<td class="left_tb">
+				<input class="buttsRight" type="image" src="image/powICO.jpg" alt="submit" name="Exit" value="Exit" >
+		</td>
+		<td class="right_tb">
+	 			<input class="buttsRight" type="submit" name="Power" value="Power">
+		</td>
+		
+	</tr>
+	<tr>
+		<td class="left_tb">
+				<input class="buttsRight" type="image" src="image/powICO.jpg" alt="submit" name="Exit" value="Exit" >
+		</td>
+		<td class="right_tb">
+				<input class="buttsRight" type="submit" name="Power" value="Power">
+		</td>
+	</tr>
+	<tr>
+		<td class="left_tb">
+				<input class="buttsRight" type="image" src="image/powICO.jpg" alt="submit" name="Exit" value="Exit" >
+		</td>
+		<td class="right_tb">
+				<input class="buttsRight" type="submit" name="Power" value="Power">
+		</td>
+	</tr>
+
+</table>
+
+</form>
+
+ -->
