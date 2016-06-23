@@ -28,6 +28,7 @@ from flask import Response
 from Fundus_Cam import Fundus_Cam
 
 
+
 #-------------------Flask implementation starts here--------------------#
 
 
@@ -52,45 +53,50 @@ def my_form_post():
     
     return redirect(url_for('loadSimple'))
 
-@app.route('/captureSimple')
-def loadSimple():
-    return render_template('capture_simple.html')    
+##@app.route('/captureSimple')
+##def loadSimple():
+##    return render_template('capture_simple.html')    
 
 #captureSimple : to displey simple image    
 @app.route('/captureSimple', methods=['GET','POST'])
 def captureSimpleFunc():
-    if request.method == 'POST':
-        #If flip button pressed
-        if request.form['Flip']=='Flip':
-            obj_fc.flip-cam()
-            #return render_template('capture_simple.html')
+    if request.method == 'GET':
+        #return render_template('capture_simple.html')
+        return redirect(url_for('loadSimple'))
+
+    #If flip button pressed
+    if request.form['Flip']=='Flip':
+        obj_fc.flip-cam()
+        #return render_template('capture_simple.html')
+    
+    #if 'Click' button pressed
+    if request.form['Click']=='Click' :
+        print ('Helloooo')
+        obj_fc.capture()
+        Fundus_Cam.decode_images(obj_fc.image,os.path.dirname(__file__)+"/images/"+processed_text,'xyz1.jpg')
         
-        #if 'Click' button pressed
-        if request.form['Click']=='Click' :
-            obj_fc.capture()
 
-        #if 'Video' has to be taken and 'Vid' button is pressed
-        if request.form['Vid']=='Vid':
-            obj_fc.continuous_capture()
-            #return render_template('capture_simple.html')
+    #if 'Video' has to be taken and 'Vid' button is pressed
+    if request.form['Vid']=='Vid':
+        obj_fc.continuous_capture()
+        #return render_template('capture_simple.html')
         
-        #if stop button is pressed
-        if request.form['stop']=='stop':
-        	if obj_state == True:
-                obj_fc.stop_preview()
-                obj_fc.stop()
-                obj_state=False
-            else:
-                obj_fc.Fundus_Cam()
-                obj_state==True
+    #if stop button is pressed
+    if request.form['stop']=='stop':
+     	if obj_state == True:
+            obj_fc.stop_preview()
+            obj_fc.stop()
+            obj_state=False
+    	else:
+            obj_fc.Fundus_Cam()
+            obj_state==True
 
-    	   #return render_template('index.html')
-        if request.form['shutd']=='shutd':
-            os.system("shutdown now -h")
-    if request.method=='GET':
-        return render_template('capture_simple.html')
-
-
+    #return render_template('index.html')
+    if request.form['shutd']=='shutd':
+        os.system("shutdown now -h")
+    #return render_template('capture_simple.html')
+    
+    
 #Cam flask routes -----------------------#-------------------------------
 
 #@app.route('/video_feed')
@@ -108,7 +114,7 @@ def captureSimpleFunc():
 #main--------------------#
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run()
 
 
 

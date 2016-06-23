@@ -65,7 +65,7 @@ class Fundus_Cam(object):
                 
     
     # to flip the camera 
-    def flip_cam():
+    def flip_cam(self):
         self.camera.vflip=(not self.flip_state)
 
     #to capture a single image
@@ -99,19 +99,19 @@ class Fundus_Cam(object):
         
 
 # decode,process and save the grabbed image
-def decode_image(images):
-    name=raw_input("enter the name to be saved")
+def decode_image(images,path,name):
+##    name=raw_input("enter the name to be saved")
     if type(images) is list:
         no=1
         for img in images:
             image=cv2.imdecode(img,1)
             #image=get_fundus(image)
-            cv2.imwrite('images/test/' + name + '_'+str(no)+'.jpg',image)
+            cv2.imwrite(path + name + '_'+str(no)+'.jpg',image)
             no=no+1
     else:
         image=cv2.imdecode(images,1)
         #image=get_fundus(image)
-        cv2.imwrite('images/test/' + name + '.jpg',image)
+        cv2.imwrite(path + name + '.jpg',image)
             
         
 
