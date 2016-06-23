@@ -44,6 +44,7 @@
 <body>
 
 <form class="all" method="POST" >
+<!-- 
 <table>
 	<tr>
 		<td class="left_tb">
@@ -94,7 +95,57 @@
 	</tr>
 
 </table>
+ -->
+ <table>
+	<tr>
+		<td class="left_tb">
+				<input class="buttsLeft" type="submit" name="Flip" value="Flip" >
+		<td rowspan="5"	>
+				<img src="{{ url_for('static',filename='owlLogo.jpg')}}" height="480px" width="640px" style="align: middle; ">
+		</td>
+		<td class="right_tb">
+				<input class="buttsRight" type="submit" name="shutd" value="shutd">
+		</td>
+	</tr>
+	<tr>
+		<td class="left_tb">
+				<input class="buttsRight" type="submit" name="Exit" value="Exit" >
+		</td>
+		<td class="right_tb">
+				<input class="buttsRight" type="submit" name="Vid" value="Vid" >
+		</td>
+		
+	</tr>
+	<tr>
+		<td class="left_tb">
+				<input class="buttsLeft" type="submit" name="Click" value="Click" >
+		
+		</td>
+		<td class="right_tb">
+				<input class="buttsLeft" type="submit" name="Click" value="Click" >
+		
+		</td>
+		
+	</tr>		
+	<tr>
+		<td class="left_tb">
+				<input class="buttsRight" type="submit" name="Vid" value="Vid" >
+		</td>
+		<td class="right_tb">
+				<input class="buttsRight" type="submit" name="Exit" value="Exit" ><
+		</td>
+	</tr>
+	<tr>
+		<td class="left_tb">
+				<input class="buttsRight" type="submit" name="shutd" value="shutd">
+		</td>
+		<td class="right_tb">
+				<input class="buttsLeft" type="submit" name="Flip" value="Flip" >
+				
+		</td>
+	</tr>
 
+</table>
 </form>
 
 
@@ -156,7 +207,7 @@
 				<input class="buttsRight" type="image" src="image/powICO.jpg" alt="submit" name="Exit" value="Exit" >
 		</td>
 		<td class="right_tb">
-				<input class="buttsRight" type="submit" name="Power" value="Power">
+	 			<input class="buttsRight" type="submit" name="Power" value="Power">
 		</td>
 		
 	</tr>
