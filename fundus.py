@@ -43,12 +43,13 @@ def my_form():
 @app.route('/', methods=['POST'])
 def my_form_post():
     global processed_text
-    global obj_state = True
+    global obj_state
+    obj_state = True
     text = request.form['text']
     processed_text = text.upper()
     make_a_dir(processed_text)
     obj_fc = Fundus_Cam()
-    global obj_state = True
+    
     return redirect(url_for('loadSimple'))
 
 @app.route('/captureSimple')
@@ -59,7 +60,7 @@ def loadSimple():
 @app.route('/captureSimple', methods=['GET','POST'])
 def captureSimpleFunc():
     #If flip button pressed
-    if request.form['Flip']=='Flip'
+    if request.form['Flip']=='Flip':
 	obj_fc.flip-cam()
         return render_template('capture_simple.html')
     
@@ -74,10 +75,10 @@ def captureSimpleFunc():
     
     #if stop button is pressed
     if request.form['stop']=='stop':
-    	   if obj_state == True
-               obj_fc.stop_preview()
+    	   if obj_state == True:
+            obj_fc.stop_preview()
         	   obj_fc.stop()
-               obj_state==False
+               obj_state=False
             else:
                 obj_fc.Fundus_Cam()
                 obj_state==True
