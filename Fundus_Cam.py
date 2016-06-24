@@ -90,28 +90,29 @@ class Fundus_Cam(object):
     # used in version higher than 1.0
     def stop(self):
         self.stopped=True
-        
+##    def decode_image(images,path_sen,name):
+##    #name=raw_input("enter the name to be saved")
+##        no=1
+##        if type(images) is list:
+##        
+##            for img in images:
+##                image=cv2.imdecode(img,1)
+##                #image=get_fundus(image)
+##                cv2.imwrite(path_sen + name + '_'+str(no)+'.jpg',image)
+##                no=no+1
+##        else:
+##            image=cv2.imdecode(images,1)
+##            #image=get_fundus(image)
+##            cv2.imwrite(path_sen + name + '.jpg',image)   
    
 ######        End of Class Implementation  ############
 #######################################################
 
-
+    
         
 
 # decode,process and save the grabbed image
-def decode_image(images,path,name):
-##    name=raw_input("enter the name to be saved")
-    if type(images) is list:
-        no=1
-        for img in images:
-            image=cv2.imdecode(img,1)
-            #image=get_fundus(image)
-            cv2.imwrite(path + name + '_'+str(no)+'.jpg',image)
-            no=no+1
-    else:
-        image=cv2.imdecode(images,1)
-        #image=get_fundus(image)
-        cv2.imwrite(path + name + '.jpg',image)
+
             
         
 

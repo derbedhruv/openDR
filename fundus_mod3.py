@@ -26,8 +26,25 @@ from flask import redirect, session, g, url_for, flash
 
 from flask import Response
 from Fundus_Cam import Fundus_Cam
+import cv2
+import numpy as np
 
 
+
+def decode_image(images,path_sen,name):
+    #name=raw_input("enter the name to be saved")
+        no=1
+        if type(images) is list:
+        
+            for img in images:
+                image=cv2.imdecode(img,1)
+                #image=get_fundus(image)
+                cv2.imwrite(path_sen + name + '_'+str(no)+'.jpg',image)
+                no=no+1
+        else:
+            image=cv2.imdecode(images,1)
+            #image=get_fundus(image)
+            cv2.imwrite(path_sen + name + '.jpg',image)  
 
 #-------------------Flask implementation starts here--------------------#
 
@@ -67,42 +84,39 @@ def captureSimpleFunc():
     if request.method == 'POST':
         if "d" in request.form.keys():
             d=request.form['d']
+            #if photo has to be taken
             if d == 'Click':
                 obj_fc.capture()
-                Fundus_Cam.decode_images(obj_fc.image,os.path.dirname(__file__)+"/images/"+processed_text,'xyz1.jpg')
+                decode_image(obj_fc.image,file_path(processed_text),'n')
                 return render_template('capture_simple.html',params=tokens)
 
 
             #If flip button pressed
             if d == 'Flip':
                 obj_fc.flip_cam()
-                return render_template('capture_simple.html')
+                return render_template('capture_simple.html',params=tokens)
     
-            #if 'Vid' button pressed
-            if d == 'Vid':
-                obj_fc.capture()
-                Fundus_Cam.decode_images(obj_fc.image,os.path.dirname(__file__)+"/images/"+processed_text,'xyz1.jpg')
-        
+            
 
-        #if 'Video' has to be taken and 'Vid' button is pressed
-        if request.form['Vid']=='Vid':
-            obj_fc.continuous_capture()
-            #return render_template('capture_simple.html')
+            #if 'Video' has to be taken and 'Vid' button is pressed
+            if d=='Vid':
+                obj_fc.continuous_capture()
+                decode_image(obj_fc.images,file_path(processed_text),'n')
+                return render_template('capture_simple.html',params=tokens)
         
-        #if stop button is pressed
-        if request.form['stop']=='stop':
-     	    if obj_state == True:
-                obj_fc.stop_preview()
-                obj_fc.stop()
-                obj_state=False
-    	    else:
-                obj_fc.Fundus_Cam()
-                obj_state==True
+            #if stop button is pressed
+            if d=='Switch':
+                if obj_state == True:
+                    obj_fc.stop_preview()
+                    obj_state=False
+                else:
+                    obj_fc.Fundus_Cam()
+                    obj_state==True
 
-        return render_template('capture_simple.html')
-        if request.form['shutd']=='shutd':
-            os.system("shutdown now -h")
-        #return render_template('capture_simple.html')
+                return render_template('capture_simple.html',params=tokens)
+            if d=='Shut':
+                os.system("shutdown now -h")
+                return render_template('capture_simple.html',params=tokens)
     
     
 #Cam flask routes -----------------------#-------------------------------
@@ -138,8 +152,15 @@ def make_a_dir(pr_t):
     if not os.path.exists(d):
         os.mkdir(d)
     
+def file_path(pr_t):
+    fi_x=open(os.path.dirname(__file__)+'/name','r')
+    nam = (int)(fi_x.read())+1
+    fi_x=open(os.path.dirname(__file__)+'/name','w')
+    fi_x.write(str(nam-1))
+    fullpath=os.path.dirname(__file__)+"/images/"+pr_t + "/" +str(nam-1)
+    return fullpath
 
-
+    
 # set the pins - names are based on the colours of the wires connecting to the LEDs
 # NOTE: Both the orangeyellow and bluegreen LEDs are active LOW, hence 0 is ON and vice versa
 orangeyellow = 2
