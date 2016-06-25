@@ -115,15 +115,13 @@ def captureSimpleFunc():
 
                 return render_template('capture_simple.html',params=tokens)
             if d=='Shut':
-                shut_down()
+                
+os.system("shutdown now -h")
                 return render_template('capture_simple.html',params=tokens)
     
+
 def shut_down():
-    command = "/usr/bin/sudo /sbin/shutdown now"
-    import subprocess
-    process=subprocess.Popen(command.split(), stdout=subprocess.PIPE)
-    output = process.communicate()[0]
-    print output    
+    
 #Cam flask routes -----------------------#-------------------------------
 
 #@app.route('/video_feed')

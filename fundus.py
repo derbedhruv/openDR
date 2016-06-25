@@ -69,7 +69,6 @@ def captureSimpleFunc():
     
         #if 'Click' button pressed
         if request.form['Click']=='Click' :
-            print ('Helloooo')
             obj_fc.capture()
             Fundus_Cam.decode_images(obj_fc.image,os.path.dirname(__file__)+"/images/"+processed_text,'xyz1.jpg')
         
