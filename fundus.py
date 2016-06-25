@@ -1,9 +1,9 @@
 ##################################################################
-##  OWL v2.6					                ##      		##
+##  OWL v2.7					                        		##
 ## ------------------------------------------------------------ ##
 ##  Primary Author: Dhruv Joshi                                 ##
-##  Srujana Center for Innovation, LV Prasad Eye Institute	##
-##  								##                            ##
+##  Srujana Center for Innovation, LV Prasad Eye Institute	    ##
+##  								                            ##
 ##  This code will wait for an external button press, capture	##
 ##  two images in rapid succession with two different white  	##
 ##  LEDs, process them to remove glare computationally, send	##
@@ -23,7 +23,7 @@ from flask import Flask
 from flask import request
 from flask import render_template
 from flask import redirect, session, g, url_for, flash
-# from camerax import VideoCamera
+
 from flask import Response
 from Fundus_Cam import Fundus_Cam
 
@@ -32,7 +32,6 @@ from Fundus_Cam import Fundus_Cam
 #-------------------Flask implementation starts here--------------------#
 
 
-###processed_text = ''
 #create flask app
 app = Flask(__name__)
 
@@ -41,49 +40,73 @@ app = Flask(__name__)
 def my_form():
     return render_template("index.html")
 
+#MR number input is accepted here
 @app.route('/', methods=['POST'])
 def my_form_post():
     global processed_text
+    global obj_state
+    obj_state = True
     text = request.form['text']
     processed_text = text.upper()
     make_a_dir(processed_text)
+    obj_fc = Fundus_Cam()
     return redirect(url_for('captureSimpleFunc'))
-    #fundusRun(processed_text)
-    
 
-
+##@app.route('/captureSimple')
+##def loadSimple():
+##    return render_template('capture_simple.html')    
 
 #captureSimple : to displey simple image    
-@app.route('/captureSimple', methods=['GET'])
+@app.route('/captureSimple', methods=['GET','POST'])
 def captureSimpleFunc():
-    return render_template("capture_simple.html")
-    fundusRun(processed_text)
-    if request.form(['flip']) == 'Flip' :
-        #Run command to flip the output
-        camera.vflip = not camera.vflip;
-        return redirect(url_for('captureSimpleFunc'))
-
-    elif request.form(['click_pic']) == 'Capture':
-        #Run Function toggle capture image
-        take_a_pic(processed_text)
-        return redirect(url_for('captureSimpleFunc'))
+    if request.method == 'GET':
+        return render_template('capture_simple.html')
+    if request.method == 'POST':
+        #If flip button pressed
+        if request.form['Flip']=='Flip':
+            obj_fc.flip-cam()
+            #return render_template('capture_simple.html')
+    
+        #if 'Click' button pressed
+        if request.form['Click']=='Click' :
+            print ('Helloooo')
+            obj_fc.capture()
+            Fundus_Cam.decode_images(obj_fc.image,os.path.dirname(__file__)+"/images/"+processed_text,'xyz1.jpg')
         
-    else:
-        return redirect(url_for('captureSimpleFunc'))
 
+        #if 'Video' has to be taken and 'Vid' button is pressed
+        if request.form['Vid']=='Vid':
+            obj_fc.continuous_capture()
+            #return render_template('capture_simple.html')
+        
+        #if stop button is pressed
+        if request.form['stop']=='stop':
+     	    if obj_state == True:
+                obj_fc.stop_preview()
+                obj_fc.stop()
+                obj_state=False
+    	    else:
+                obj_fc.Fundus_Cam()
+                obj_state==True
 
+        return render_template('capture_simple.html')
+        if request.form['shutd']=='shutd':
+            os.system("shutdown now -h")
+        #return render_template('capture_simple.html')
+    
+    
 #Cam flask routes -----------------------#-------------------------------
 
-@app.route('/video_feed')
-def video_feed():
-    return Response(gen(Fundus_Cam()),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
-
-def gen(Fundus_Cam):
-    while True:
-        frame = Fundus_Cam.get_frame()
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+#@app.route('/video_feed')
+#def video_feed():
+#    return Response(gen(Fundus_Cam()),
+#                    mimetype='multipart/x-mixed-replace; boundary=frame')
+#
+#def gen(Fundus_Cam):
+#    while True:
+#        frame = Fundus_Cam.get_frame()
+#        yield (b'--frame\r\n'
+#               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
 
 #main--------------------#
@@ -96,16 +119,7 @@ if __name__ == '__main__':
 
 
 
-
 #..........Below this line, all the functions not having flask lie.........#
-
-
-
-
-
-
-    
-
 
 
 #make a directory of patient's name if it does not exist
@@ -146,55 +160,56 @@ def secondaryON():
 
 
 #function for capturing HQ images
-def take_a_pic(pr_tx):    
-    camera.capture('images/'+pr_tx+'/' + str(i) + '_1.jpg', use_video_port=False)
-
- # Then capture with the second LED
-    secondaryON() 
-    camera.capture('images/'+pr_tx+'/' + str(i) + '_2.jpg', use_video_port=False)
-    
- # Reset LED states
-    normalON()
-    camera.stop_preview()
-    i=i+1
-
+##def take_a_pic(pr_tx):    
+##    camera.capture('images/'+pr_tx+'/' + str(i) + '_1.jpg', use_video_port=False)
+##
+## # Then capture with the second LED
+##    secondaryON() 
+##    camera.capture('images/'+pr_tx+'/' + str(i) + '_2.jpg', use_video_port=False)
+##    
+## # Reset LED states
+##    normalON()
+##    camera.stop_preview()
+##    i=i+1
+##
 
 
 
 
 # Begin the polling for the switch
-def fundusRun(pr_t):
-    normalON()
-    with picamera.PiCamera() as camera:
-        camera.resolution =  camera.MAX_IMAGE_RESOLUTION
-        try:
-        
-            while True:
-                    #filename = 'images/image',i,'.jpg'
-                    #camera.start_preview()
-                    camera.vflip = False
-                    time.sleep(0.01)
-                    pi.wait_for_edge(switch,pigpio.RISING_EDGE)
-                    take_a_pic(pr_t)
-                 # Button is pressed
-                 # First capture a picture with the first LED on
-                 # use_video_port=False enables capturing the image using the STILL port giving max resolution, instead of the video port. DO NOT CHANGE.
-                    
-                    
-                 #    camera.capture('images/'+pr_t+'/' + str(i) + '_1.jpg', use_video_port=False)
-
-                 # # Then capture with the second LED
-                 #    secondaryON() 
-                 #    camera.capture('images/'+pr_t+'/' + str(i) + '_2.jpg', use_video_port=False)
-    
-                 # # Reset LED states
-                 #    normalON()
-                 #    camera.stop_preview()
-                 #    i=i+1
-        except  KeyboardInterrupt: 
-        #   except ValueError:
-            print 'Interrupted'
-            pi.write(orangeyellow,0)
-            pi.write(bluegreen,0)
-            camera.stop_preview()
-            pi.stop()
+##def fundusRun(pr_t):
+##    normalON()
+##    
+##    with picamera.PiCamera() as camera:
+##        camera.resolution =  camera.MAX_IMAGE_RESOLUTION
+##        try:
+##        
+##            while True:
+##                    #filename = 'images/image',i,'.jpg'
+##                    #camera.start_preview()
+##                    camera.vflip = False
+##                    time.sleep(0.01)
+##                    pi.wait_for_edge(switch,pigpio.RISING_EDGE)
+##                    take_a_pic(pr_t)
+##                 # Button is pressed
+##                 # First capture a picture with the first LED on
+##                 # use_video_port=False enables capturing the image using the STILL port giving max resolution, instead of the video port. DO NOT CHANGE.
+##                    
+##                    
+##                 #    camera.capture('images/'+pr_t+'/' + str(i) + '_1.jpg', use_video_port=False)
+##
+##                 # # Then capture with the second LED
+##                 #    secondaryON() 
+##                 #    camera.capture('images/'+pr_t+'/' + str(i) + '_2.jpg', use_video_port=False)
+##    
+##                 # # Reset LED states
+##                 #    normalON()
+##                 #    camera.stop_preview()
+##                 #    i=i+1
+##        except  KeyboardInterrupt: 
+##        #   except ValueError:
+##            print 'Interrupted'
+##            pi.write(orangeyellow,0)
+##            pi.write(bluegreen,0)
+##            camera.stop_preview()
+##            pi.stop()

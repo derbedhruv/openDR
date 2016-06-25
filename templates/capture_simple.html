@@ -1,61 +1,35 @@
-<!DOCTYPE html>
+<!-- Still have to comment stuff here -->
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Capture_Image</title>
-	<style type="text/css">
-		#flip_it{
-			color: black;
-			border-style: solid;
-			border-radius: 3px;
-			clear: left;
-			padding-top: 30px;
-			padding-bottom: 30px;
-			float: left;
-			vertical-align: center;
+	<style>
+	button{
+	width: 50px;
+	height : 50px;
+	
 
-		}
-		#click_pic{
-			padding-top: 30px;
-			padding-bottom: 30px;
-			float: right;
-			vertical-align: center;					
-			color: black;
-			border-style: solid;
-			border-radius: 3px;
-			clear: right;
-
-		}
-		body{
-			background-color: #000033;
-		}
-		#video_frame{
-			float: left;
-			
-		}
-
-
+}
+body{
+	background-color: #000000;
+}
 	</style>
 </head>
 <body>
-	<div id="flip_">
-	<form class="all" method="POST" action=".">
-		<!--This for is for accepting Button click values for flip-->
-		<input id="flip_it" type="submit" name="flip" value="Flip">	
-	</form>
-	</div>
-	<div>
-		<!--this div will have the live stream from the video-->
+12
+<div id="buttonarea">
+<table border="0" class="table">
+{% for o in params %}
 
-    	<img id="video_frame" height="480" width="640" id="bg" src="{{ url_for('video_feed') }}">
-
-	</div>
-	<div>
-	<form class="all" action="." method="POST"> 
-		<!--For Button response for Capturing image-->
-		<input id="click_pic" type="submit" name="click_pic" value="Capture" >
-	</form>
-	</div>
+<tr>
+<td>
+<form method="post">
+<button class="button_style" name="d" value="{{o}}"> {{o}} </button>
+<td>
+<tr>
+0
+{% endfor %}
+</div>
 
 </body>
-</html>
+</html>	
