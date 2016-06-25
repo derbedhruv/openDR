@@ -2,6 +2,7 @@
                         ## Fundus_Cam.py           ##
                         ## Primary Author: Ebin    ##
                         ## Version : 1.0           ##
+			##Contributor: Ayush Yadav ##
                         #############################
 
 
@@ -90,6 +91,10 @@ class Fundus_Cam(object):
     # used in version higher than 1.0
     def stop(self):
         self.stopped=True
+
+    def __del__(self):
+        camera.close()
+
 ##    def decode_image(images,path_sen,name):
 ##    #name=raw_input("enter the name to be saved")
 ##        no=1

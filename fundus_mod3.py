@@ -105,13 +105,14 @@ try:
         
     def decode_image(images):
         #name=raw_input("enter the name to be saved")
-            global no=1
+            global no
+            no=1
 
-            file_r = open('name','r')
+            file_r = open(os.path.dirname(__name__)+'name','r')
             picn = (int)(file_r.read())
             picn = picn+1
-            file.close()
-            file_w = open('name','w')
+            file_r.close()
+            file_w = open(os.path.dirname(__name__)+'name','w')
             file_w.write(str(picn))
             file_w.close()
             if type(images) is list:
@@ -125,7 +126,7 @@ try:
                 image=cv2.imdecode(images,1)
                 #image=get_fundus(image)
                 cv2.imwrite(os.path.dirname(__file__)+"/images/" + processed_text + '/' + processed_text +'_' + str(picn) +'_' + str(no) + '.jpg',image)  
-
+		no=no+1
     #-------------------Flask implementation starts here--------------------#
 
 
@@ -237,7 +238,7 @@ try:
     ##            camera.stop_preview()
     ##            pi.stop()
 except:
-    return "Error occured: We will now shut down"
+    render_template('''<html><body>Error occured: We will now shut down</body></html>''')
     time.sleep(3)
     shut_down()
 
