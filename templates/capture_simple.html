@@ -5,9 +5,20 @@
 	<title>Capture_Image</title>
 	<style>
 	button{
-	width: 76px;
-	height : 94px;
+	width: 70px;
+	height : 85px;
 	margin-left: 2px;
+	border: none;
+	background-color: #33cccc;
+	text-align:center;
+	color: white;
+}
+button:active{
+	background-color:#00ff99
+
+}
+button:hover{
+	background-color: #009999;
 }
 body{
 	background-color: #000000;
@@ -15,21 +26,17 @@ body{
 	</style>
 </head>
 <body>
-12
 <div id="buttonarea">
 <table border="0" class="table">
 {% for o in params %}
-
 <tr>
 <td>
 <form method="post">
-<button class="button_style" name="d" value="{{o}}"> <img src="{{  url_for('static',filename='{{o}}.jpg') }}"></button>
+<button class="button_style" name="d" value="{{o}}"> {{o}}</button>
 <td>
 <tr>
-0
 {% endfor %}
 </div>
-
 </body>
 </html>	
 
