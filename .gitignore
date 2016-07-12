@@ -4,3 +4,6 @@
 
 fundus.pyc
 Fundus_Cam.pyc
+
+*.pyc
+
