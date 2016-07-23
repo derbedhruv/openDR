@@ -28,6 +28,8 @@ SOFTWARE.
 ## Hardware platform
 Details about assembly and parts is given on our [hackaday page](https://hackaday.io/project/11943-open-indirect-ophthalmoscope). Our software is designed and tested on a raspberry PI v2B and 3B, with M12 mount rPI cameras (through DSI cable).
 
-## How to install
+## How to install dependencies
+
+## How to run
 
 
