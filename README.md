@@ -27,6 +27,9 @@ SOFTWARE.
 
 ## Hardware platform
 Details about assembly and parts is given on our [hackaday page](https://hackaday.io/project/11943-open-indirect-ophthalmoscope). Our software is designed and tested on a raspberry PI v2B and 3B, with M12 mount rPI cameras (through DSI cable).
+The latest Raspberry Pi used was RPi 3 Mod B.
+It runs a custom Raspbian Wheezy provided by Waveshare which allows their LCD touchscreen (Waveshare 5inch HDMI LCD (B)) drivers to run on it.
+
 
 ## Dependencies
 All dependencies can be installed by running `install.sh`
