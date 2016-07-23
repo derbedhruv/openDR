@@ -1,7 +1,7 @@
 ##################################################################
 ##  OWL v2.9					                        		##
 ## ------------------------------------------------------------ ##
-##  Primary Author: Dhruv Joshi                                 ##
+##  Authors: Ayush Yadav, Devesh Jain, Ebin Philip, Dhruv Joshi ##
 ##  Srujana Center for Innovation, LV Prasad Eye Institute	    ##
 ##  								                            ##
 ##  This code will wait for an external button press, capture	##
@@ -9,8 +9,7 @@
 ##  LEDs, process them to remove glare computationally, send	##
 ##  them to the theia algo backend to be processed, save them	##
 ##  and return the score on-screen in human readable format.	##
-##                                                              ##        
-##  Code Contributors: Ayush Yadav, Devesh Jain, Ebin Philip    ##
+##                                                              ##      
 ##                                                              ##
 ##  New in 2.6 :  Path corrected and Onscreen keyboard added    ##
 ##################################################################
