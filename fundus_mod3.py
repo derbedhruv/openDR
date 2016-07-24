@@ -35,7 +35,8 @@ try:
     #-------------------Flask implementation starts here-------------------#
 
     #create flask app
-    app = Flask(__name__)
+    app = Flask(__name__)ton on GUI
+    #tokens would have the value for each but
     tokens=['Flip' , 'Vid' , 'Click' , 'Switch' , 'Shut' ]
 
     #URL setter
@@ -46,14 +47,22 @@ try:
     #MR number input is accepted here
     @app.route('/', methods = ['POST'])
     def my_form_post():
+        #processesd_text stores the MR_number
         global processed_text
         global obj_state
         obj_state = True
+
+        #input for MR Number into 'text' variable
         text = request.form['text']
+        
+        #converting input text to upper case for final MR number
         processed_text = text.upper()
         make_a_dir(processed_text)
+        
+        #declaring object Fundus_cam
         global obj_fc
         obj_fc = Fundus_Cam()
+
         return redirect(url_for('captureSimpleFunc'))
 
 
@@ -100,6 +109,10 @@ try:
         #name=raw_input("enter the name to be saved")
             global no
             no=1
+            ## This part of code is to open the file 'name' and add the number
+            #  in the file to the pic taken and increment it
+            ## This is done so that each pic taken has a unique name and also no
+            #  overwriting happens
             file_r = open(os.path.dirname(__name__)+'name','r')
             picn = (int)(file_r.read())
             picn = picn+1
@@ -107,6 +120,8 @@ try:
             file_w = open(os.path.dirname(__name__)+'name','w')
             file_w.write(str(picn))
             file_w.close()
+
+            # Save image in the particular directory with the given file name
             if type(images) is list:
             
                 for img in images:
