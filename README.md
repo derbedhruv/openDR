@@ -27,14 +27,27 @@ SOFTWARE.
 
 ## Hardware platform
 Details about assembly and parts is given on our [hackaday page](https://hackaday.io/project/11943-open-indirect-ophthalmoscope). Our software is designed and tested on a raspberry PI v2B and 3B, with M12 mount rPI cameras (through DSI cable).
-The latest Raspberry Pi used was RPi 3 Mod B.
-It runs a custom Raspbian Wheezy provided by Waveshare which allows their LCD touchscreen (Waveshare 5inch HDMI LCD (B)) drivers to run on it.
-
 
 ## Dependencies
 All dependencies can be installed by running `install.sh`
 
 ## How to run
+Simply run `run.sh`
 
 ## Under the hood
-The folder structure is as follows:
+The GUI is run as a fullscreen webapp served with Flask. Our system's backbone is Python.
+The folder structure is as follows (All individual folders have their own readme):
+
+```
+openDR  
+   |---experimental_modules  
+   |---images  
+   |---static  
+   |---templates  
+```
+* `experimental_modules` contains work in progress python modules. 
+* `images` contains the images taken using the device. Images are stored in a folder named with the MR Number, and image names are of the format `MR_no_i_j.jpg` where i and j are integers. _i_ indicates session no and _j_ indicates pic number within that session.
+* `static` contains all static elements (css, fonts, images, javascript) for the webapp gui which is served.
+* `templates` contains all html for the webapp
+
+The main functionality is written in `openDR/fundus_mod3.py`. This code polls for a button press and captures two images in quick succession (illuminating by two separate LEDs controlled by GPIO). The images are processed and then saved.
