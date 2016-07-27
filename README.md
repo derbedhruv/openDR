@@ -68,50 +68,61 @@ The folder structure of deployable application is as follows:
 
 	- images #Folder
 		
-		USED FOR STORING ALL CLICKED IMAGES AND VIDS
+		Used for storing all clicked images and vids
 	
 	- static #Folder
 		
-		USED FOR KEEPING ALL THE STATIC FILES FOR FLASK LIKE CSS, IMAGES ETC
-		ALSO HOLDS THE JQ KEYBOARD MODULE
+		Used for storing all the static files for flask app like CSS, images etc. 
+		
+		Also has the JQ Keyboard Module
+		
 		-fonts  #Folder
+		
 		-css    #Folder
+		
 		-images #Folder
+		
 		-js     #Folder
 	
 	- templates #Folder
 		
-		KEEPS ALL THE WEBPAGES AS THEIR HTMLS
+		Storing all the webpages of the HTML
 	
 	- name #File
 		
-		STORES THE IMAGE NUMBER OF THE IMAGE LAST CLICKED AND STORES ON DEVICE
+		Stores the image number of the image last clicked and stores on the device
 	
 	- .gitignore #File
 
 	- Fundus_cam.py #File
 		
-		STORES CLASS WHICH ALLOWS FOR THE CREATION OF OBJECT CONROLLING THE PICAMERA
-		THE VARIOUS FUNCTIONS OF THE CAMERA ARE CONTROLLED VIA THIS FILE'S CLASS
-		IT IS IMPORTED INTO THE fundus_mod3.py TO MAKE IT WORK
+		Stores class which allows for the creation of object controlling the Picamer
+		
+		The various functions of the camera are controlled via this file's class
+		
+		It is imported into the fundus_mod3.py to make it work
 
 	- fundus_mod3.py #File
 		
-		VARIOUS ITERATIONS HAVE LED TO SUCH A WEIRD NAME FOR THE FILE
-		IT IS THE INTEGRATIVE MODULE WHICH INTEGRATES THE DEVICE, GUI AND CAMERA
-		IT HAS THE FLASK SERVER WHICH IS LOADED ON STARTUP OF DEVICE
-		ANY INTEGRATIONS ARE TO BE DONE FROM THIS FILE ITSELF UNLESS A MAJOR UPGRADE IS BEING PUSHED
+		Various iterations of code have resulted in such naming of the file
+		
+		It is the integrative module which integrates the device, GUI and camera
+		
+		It has the flask server which is loaded on startup of device
+		
+		Any integrations are to be done from this file unless a major upgrade is being pushed
 
 
 	- simplehttp.sh
 		
-		IT CREATES A PYTHON SIMPLEHTTP SERVER ON PORT 8000 TO ALLOW FOR TRANSFER OF FILES FROM THE DEVICE
-		IT'S A TEMPORARY HACK AND A BETTER METHOD WOULD BE EMPLOYED FOR IT SOON ENOUGH
+		It creates a python simplehttp server on port 8000 to allow for transfer of files from the device
+		
+		It's a temporary hack and a better method would be employed for it soon enough
 
 	- license.txt
 		
-		FILE HAVING THE MIT LICENSE
+		File with the MIT LICENSE
 
 	- README.md
 		
-		FILE WITH ALL INSTRUCTIONS
+		Primary instruction and information manuel 
