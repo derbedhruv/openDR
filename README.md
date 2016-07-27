@@ -36,50 +36,7 @@ Simply run `run.sh`
 
 ## Under the hood
 
-The folder structure is as follows:
 
-- openDR #Main Folder
-
-	- images #Folder
-		USED FOR STORING ALL CLICKED IMAGES AND VIDS
-	
-	- static #Folder
-		USED FOR KEEPING ALL THE STATIC FILES FOR FLASK LIKE CSS, IMAGES ETC
-		ALSO HOLDS THE JQ KEYBOARD MODULE
-		-fonts  #Folder
-		-css    #Folder
-		-images #Folder
-		-js     #Folder
-	
-	- templates #Folder
-		KEEPS ALL THE WEBPAGES AS THEIR HTMLS
-	
-	- name #File
-		STORES THE IMAGE NUMBER OF THE IMAGE LAST CLICKED AND STORES ON DEVICE
-	
-	- .gitignore #File
-
-	- Fundus_cam.py #File
-		STORES CLASS WHICH ALLOWS FOR THE CREATION OF OBJECT CONROLLING THE PICAMERA
-		THE VARIOUS FUNCTIONS OF THE CAMERA ARE CONTROLLED VIA THIS FILE'S CLASS
-		IT IS IMPORTED INTO THE fundus_mod3.py TO MAKE IT WORK
-
-	- fundus_mod3.py #File
-		VARIOUS ITERATIONS HAVE LED TO SUCH A WEIRD NAME FOR THE FILE
-		IT IS THE INTEGRATIVE MODULE WHICH INTEGRATES THE DEVICE, GUI AND CAMERA
-		IT HAS THE FLASK SERVER WHICH IS LOADED ON STARTUP OF DEVICE
-		ANY INTEGRATIONS ARE TO BE DONE FROM THIS FILE ITSELF UNLESS A MAJOR UPGRADE IS BEING PUSHED
-
-
-	- simplehttp.sh
-		IT CREATES A PYTHON SIMPLEHTTP SERVER ON PORT 8000 TO ALLOW FOR TRANSFER OF FILES FROM THE DEVICE
-		IT'S A TEMPORARY HACK AND A BETTER METHOD WOULD BE EMPLOYED FOR IT SOON ENOUGH
-
-	- license.txt
-		FILE HAVING THE MIT LICENSE
-
-	- README.md
-		FILE WITH ALL INSTRUCTIONS
 =======
 The GUI is run as a fullscreen webapp served with Flask. Our system's backbone is Python.
 The folder structure is as follows (All individual folders have their own readme):
@@ -91,6 +48,7 @@ openDR
    |---static  
    |---templates  
 
+
 * `experimental_modules` contains work in progress python modules. 
 * `images` contains the images taken using the device. Images are stored in a folder named with the MR Number, and image names are of the format `MR_no_i_j.jpg` where i and j are integers. _i_ indicates session no and _j_ indicates pic number within that session.
 * `static` contains all static elements (css, fonts, images, javascript) for the webapp gui which is served.
@@ -98,3 +56,62 @@ openDR
 
 The main functionality is written in `openDR/fundus_mod3.py`. This code polls for a button press and captures two images in quick succession (illuminating by two separate LEDs controlled by GPIO). The images are processed and then saved.
 
+======= For Deploying application======
+
+The repository must be cloned into the 'home' folder of Raspberry Pi, i.e., "/home/pi/" or just the '~' path. 
+The name of the user should be 'pi'
+
+
+The folder structure of deployable application is as follows:
+
+- openDR #Main Folder
+
+	- images #Folder
+		
+		USED FOR STORING ALL CLICKED IMAGES AND VIDS
+	
+	- static #Folder
+		
+		USED FOR KEEPING ALL THE STATIC FILES FOR FLASK LIKE CSS, IMAGES ETC
+		ALSO HOLDS THE JQ KEYBOARD MODULE
+		-fonts  #Folder
+		-css    #Folder
+		-images #Folder
+		-js     #Folder
+	
+	- templates #Folder
+		
+		KEEPS ALL THE WEBPAGES AS THEIR HTMLS
+	
+	- name #File
+		
+		STORES THE IMAGE NUMBER OF THE IMAGE LAST CLICKED AND STORES ON DEVICE
+	
+	- .gitignore #File
+
+	- Fundus_cam.py #File
+		
+		STORES CLASS WHICH ALLOWS FOR THE CREATION OF OBJECT CONROLLING THE PICAMERA
+		THE VARIOUS FUNCTIONS OF THE CAMERA ARE CONTROLLED VIA THIS FILE'S CLASS
+		IT IS IMPORTED INTO THE fundus_mod3.py TO MAKE IT WORK
+
+	- fundus_mod3.py #File
+		
+		VARIOUS ITERATIONS HAVE LED TO SUCH A WEIRD NAME FOR THE FILE
+		IT IS THE INTEGRATIVE MODULE WHICH INTEGRATES THE DEVICE, GUI AND CAMERA
+		IT HAS THE FLASK SERVER WHICH IS LOADED ON STARTUP OF DEVICE
+		ANY INTEGRATIONS ARE TO BE DONE FROM THIS FILE ITSELF UNLESS A MAJOR UPGRADE IS BEING PUSHED
+
+
+	- simplehttp.sh
+		
+		IT CREATES A PYTHON SIMPLEHTTP SERVER ON PORT 8000 TO ALLOW FOR TRANSFER OF FILES FROM THE DEVICE
+		IT'S A TEMPORARY HACK AND A BETTER METHOD WOULD BE EMPLOYED FOR IT SOON ENOUGH
+
+	- license.txt
+		
+		FILE HAVING THE MIT LICENSE
+
+	- README.md
+		
+		FILE WITH ALL INSTRUCTIONS
