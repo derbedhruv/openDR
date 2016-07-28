@@ -35,7 +35,7 @@ try:
     #-------------------Flask implementation starts here-------------------#
 
     #create flask app
-    app = Flask(__name__)ton on GUI
+    app = Flask(__name__)
     #tokens would have the value for each but
     tokens=['Flip' , 'Vid' , 'Click' , 'Switch' , 'Shut' ]
 
