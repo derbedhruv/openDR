@@ -1,7 +1,17 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   image stitching Prototype
+%   ------------------------------------------
+%   Author: Chakri M
+%
+%   Take two images, slightly offset, and put features which are present
+%   in both images to remove the "glare" portion from them and retain
+%   original important image features.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 clc;
 close all;
-clear all
+clear;
 
 A = imread('1.jpg'); % Read first frame into imgA
 B = imread('2.jpg'); % Read second frame into imgB
@@ -9,8 +19,8 @@ B = imread('2.jpg'); % Read second frame into imgB
 imgA = rgb2gray(A);
 imgB = rgb2gray(B);
 
-figure; imshowpair(imgA, imgB, 'montage');
-title(['Frame A', repmat(' ',[1 70]), 'Frame B']);
+% figure; imshowpair(imgA, imgB, 'montage');
+% title(['Frame A', repmat(' ',[1 70]), 'Frame B']);
 
 %%
 figure; imshowpair(imgA,imgB,'ColorChannels','red-cyan');
@@ -21,13 +31,13 @@ pointsA =  detectSURFFeatures(imgA);
 pointsB =  detectSURFFeatures(imgB);
 
 % Display corners found in images A and B.
-figure; imshow(imgA); hold on;
-plot(pointsA);
-title('Corners in A');
+% figure; imshow(imgA); hold on;
+% plot(pointsA);
+% title('Corners in A');
 
-figure; imshow(imgB); hold on;
-plot(pointsB);
-title('Corners in B');
+% figure; imshow(imgB); hold on;
+% plot(pointsB);
+% title('Corners in B');
 
 %% 
 [featuresA, pointsA] = extractFeatures(imgA, pointsA);
@@ -40,8 +50,8 @@ pointsB = pointsB(indexPairs(:, 2), :);
 
 %%
 
-showMatchedFeatures(imgA, imgB, pointsA, pointsB);
-legend('A', 'B');
+%showMatchedFeatures(imgA, imgB, pointsA, pointsB);
+% legend('A', 'B');
 
 %% Step 4. Estimating Geometric Transform (Affine)
 
@@ -51,19 +61,14 @@ pointsBmp = transformPointsForward(tform, pointsBm.Location);
 
 %%
 
-showMatchedFeatures(imgA, imgBp, pointsAm, pointsBmp);
-legend('A', 'B');
+% showMatchedFeatures(imgA, imgBp, pointsAm, pointsBmp);
+% legend('A', 'B');
 % filling with minimum color values
-w1 = zeros(1944, 2592, 'uint8');
-for i=1:1944
-    for j=1:2592
-        b = imgA(i, j);
-        c = imgBp(i, j);
-        w1(i, j) = min(b,c);            
-    end
-end
+% w1 = zeros(1944, 2592, 'uint8');
 
-% figure, clf;
+w1 = min(imgA, imgBp);
+
+figure, clf;
 imshow(w1);
 title('Stitched Image (Final)');
 
