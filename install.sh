@@ -54,7 +54,15 @@ sudo pip install --upgrade numpy
 
 # Start with cv2
 if pip list | grep -F cv2 >/dev/null; then
-	echo "cv2 is installed"
+	echo "openCV is installed"
+	## TODO: Check version
+	# If it is not proper, then sudo apt-get autoremove libopencv-dev python-opencv
 else
-	echo "cv2 not installed, please install by following the instructions on http://www.pyimagesearch.com/2015/02/23/install-opencv-and-python-on-your-raspberry-pi-2-and-b/"
+	echo "cv2 not installed, will proceed to install. This will take upto 4 hours!"
+	# Download the installer from Manuel's website
+	echo "Fetching installer: built by Manuel Ignacio Lopez Quintero - thanks a lot!"
+	wget https://raw.githubusercontent.com/milq/scripts-ubuntu-debian/master/install-opencv.sh
+	bash install-opencv.sh
 fi
+
+## TODO: Add installer and builder for extra functions!
