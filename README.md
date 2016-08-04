@@ -26,7 +26,7 @@ SOFTWARE.
 * GCC 5.3.2
 
 ## Hardware platform
-Details about assembly and parts is given on our [hackaday page](https://hackaday.io/project/11943-open-indirect-ophthalmoscope). Our software is designed and tested on a raspberry PI v2B and 3B, with M12 mount rPI cameras (through DSI cable).
+Details about assembly and parts is given on our [hackaday page](https://hackaday.io/project/11943-open-indirect-ophthalmoscope). Our software is designed and tested on a raspberry PI v2B and 3B, with M12 mount rPI cameras (through DSI cable). The OS on the raspberry PI we use is [Wheezy](https://downloads.raspberrypi.org/raspbian/images/2013-07-26-wheezy-raspbian/).
 
 ## Dependencies
 All dependencies can be installed by running `install.sh`
@@ -36,8 +36,6 @@ Simply run `run.sh`
 
 ## Under the hood
 
-
-=======
 The GUI is run as a fullscreen webapp served with Flask. Our system's backbone is Python.
 The folder structure is as follows (All individual folders have their own readme):
 
