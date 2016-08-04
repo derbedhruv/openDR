@@ -23,7 +23,7 @@ else
 fi
 
 # Check python modules are installed: Checking using pip list | grep -F package-name
-echo "Checking python modules..."
+echo "Checking python modules...some would require sudo permissions.."
 ## 		pigpio
 ## 		picamera
 ## 		flask
@@ -32,41 +32,41 @@ echo "Checking python modules..."
 
 ## TODO: This can probably be implemented using a for loop or some better way...
 
-# Start with cv2
-if pip list | grep -F cv2 >/dev/null; then
-	echo "cv2 is installed"
-else
-	echo "cv2 not installed, please install by following the instructions on http://www.pyimagesearch.com/2015/02/23/install-opencv-and-python-on-your-raspberry-pi-2-and-b/"
-fi
-
 # pigpio
 if pip list | grep -F pigpio >/dev/null; then
 	echo "pigpio is installed"
 else
-	echo "pigpio not installed, installing..."
-	pip install pigpio
+	echo "pigpio not installed, installing (Will require password)..."
+	sudo pip install pigpio
 fi
 
 # picamera
 if pip list | grep -F picamera >/dev/null; then
 	echo "picamera is installed"
 else
-	echo "picamera not installed, installing..."
-	pip install picamera
+	echo "picamera not installed, installing (Will require password)..."
+	sudo pip install picamera
 fi
 
 # flask
 if pip list | grep -F flask >/dev/null; then
 	echo "flask is installed"
 else
-	echo "flask not installed, installing..."
-	pip install flask
+	echo "flask not installed, installing (Will require password)..."
+	sudo pip install flask
 fi
 
 # numpy
 if pip list | grep -F numpy >/dev/null; then
 	echo "numpy is installed"
 else
-	echo "numpy not installed, installing..."
-	pip install numpy
+	echo "numpy not installed, installing (Will require password)..."
+	sudo pip install numpy
+fi
+
+# Start with cv2
+if pip list | grep -F cv2 >/dev/null; then
+	echo "cv2 is installed"
+else
+	echo "cv2 not installed, please install by following the instructions on http://www.pyimagesearch.com/2015/02/23/install-opencv-and-python-on-your-raspberry-pi-2-and-b/"
 fi
