@@ -4,8 +4,10 @@
 # Start by checking python version
 echo $(python -V)
 
+## TODO: Check PYTHONPATH and other environment variables
+
 # Then upgrade and update apt-get
-echo "Updating and upgrading repositories..."
+echo "Updating and upgrading repositories (Will require permissions)..."
 sudo apt-get update
 sudo apt-get upgrade
 
@@ -14,55 +16,41 @@ echo "Updating rpi..."
 sudo rpi-update
 
 # Check if pip is installed
-if command -v pip >/dev/null; then
-	echo "pip is installed"
-	echo $(pip -V)
-else
-	echo "pip is not installed, installing..."
-	sudo apt-get install pip
-fi
+echo "Checking pip..."
+sudo apt-get install python-pip
 
 # Check python modules are installed: Checking using pip list | grep -F package-name
-echo "Checking python modules...some would require sudo permissions.."
+echo "Checking python modules..."
 ## 		pigpio
 ## 		picamera
 ## 		flask
 ## 		numpy
 ## 		cv2
 
-## TODO: This can probably be implemented using a for loop or some better way...
-
 # pigpio
 if pip list | grep -F pigpio >/dev/null; then
-	echo "pigpio is installed"
+	echo "pigpio is already installed"
 else
-	echo "pigpio not installed, installing (Will require password)..."
-	sudo pip install pigpio
+	echo "pigpio not installed, installing ..."
+	echo "Fetching latest version and unzipping..."
+	wget abyz.co.uk/rpi/pigpio/pigpio.zip
+	unzip pigpio.zip
+	cd PIGPIO 
+	make
+	make install
 fi
 
 # picamera
-if pip list | grep -F picamera >/dev/null; then
-	echo "picamera is installed"
-else
-	echo "picamera not installed, installing (Will require password)..."
-	sudo pip install picamera
-fi
+echo "Checking picamera..."
+sudo pip install --upgrade picamera
 
 # flask
-if pip list | grep -F flask >/dev/null; then
-	echo "flask is installed"
-else
-	echo "flask not installed, installing (Will require password)..."
-	sudo pip install flask
-fi
+echo "Checking Flask..."
+sudo pip install --upgrade flask
 
 # numpy
-if pip list | grep -F numpy >/dev/null; then
-	echo "numpy is installed"
-else
-	echo "numpy not installed, installing (Will require password)..."
-	sudo pip install numpy
-fi
+echo "Checking numpy..."
+sudo pip install --upgrade numpy
 
 # Start with cv2
 if pip list | grep -F cv2 >/dev/null; then
