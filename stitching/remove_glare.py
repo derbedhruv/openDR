@@ -17,7 +17,6 @@ im  = cv2.imread('1.jpg')
 start = timeit.default_timer()
 
 # prepare mask - square of width 'w' centered at (x,y) which is the center of the bright spots
-mask = numpy.zeros([im.shape[0], im.shape[1]])
 x = 1396
 y = 958
 w = 100
@@ -26,7 +25,7 @@ thresh = 0.9
 # generate binary image mask - dilated circles around the saturated bright spots at the center
 temp = im[y-w:y+w, x-w:x+w,1]  # single channel
 ret, temp_mask = cv2.threshold(temp, thresh*256, 255, cv2.THRESH_BINARY)
-kernel = numpy.ones((35,35), 'uint8')
+kernel = numpy.ones((25,25), 'uint8')
 temp_mask = cv2.dilate(temp_mask, kernel)
 
 # perform the inpainting...
