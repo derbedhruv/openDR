@@ -29,17 +29,19 @@ SOFTWARE.
 Details about assembly and parts is given on our [hackaday page](https://hackaday.io/project/11943-open-indirect-ophthalmoscope). Our software is designed and tested on a raspberry PI v2B and 3B, with M12 mount rPI cameras (through DSI cable). The OS on the raspberry PI we use is [Wheezy](https://downloads.raspberrypi.org/raspbian/images/2013-07-26-wheezy-raspbian/).
 
 ## Dependencies
-All dependencies can be installed by running `install.sh`
+All dependencies can be installed by running `install.sh`, sudo password would be required if some dependencies are not present. We recommend installing the software on a fresh dedicated rPI.
 
-## How to run
-Simply run `run.sh`
+## Deploying the application
+The repository must be cloned into the 'home' folder of Raspberry Pi, i.e., `/home/pi/` or just the `~` path. 
+The name of the user should be **pi** (which is the default on new rPI OS installations).
+
 
 ## Under the hood
 
 The GUI is run as a fullscreen webapp served with Flask. Our system's backbone is Python.
 The folder structure is as follows (All individual folders have their own readme):
 
-
+####Folder Structure
 openDR  
    |---experimental_modules  
    |---images  
@@ -47,80 +49,19 @@ openDR
    |---templates  
 
 
-* `experimental_modules` contains work in progress python modules. 
-* `images` contains the images taken using the device. Images are stored in a folder named with the MR Number, and image names are of the format `MR_no_i_j.jpg` where i and j are integers. _i_ indicates session no and _j_ indicates pic number within that session.
-* `static` contains all static elements (css, fonts, images, javascript) for the webapp gui which is served.
-* `templates` contains all html for the webapp
+`experimental_modules` contains work in progress python modules. 
 
-The main functionality is written in `openDR/fundus_mod3.py`. This code polls for a button press and captures two images in quick succession (illuminating by two separate LEDs controlled by GPIO). The images are processed and then saved.
+`images` contains the images taken using the device. Images are stored in a folder named with the MR Number, and image names are of the format `MR_no_i_j.jpg` where i and j are integers. _i_ indicates session no and _j_ indicates pic number within that session.
 
-======= For Deploying application======
+`static` contains all static elements (css, fonts, images, javascript) for the webapp gui which is served.
 
-The repository must be cloned into the 'home' folder of Raspberry Pi, i.e., "/home/pi/" or just the '~' path. 
-The name of the user should be 'pi'
+`templates` contains all html for the webapp
 
+#### Important Files
+`openDR/fundus_mod3.py` has the main functionality, and integrates the GUI and imaging. This code polls for a button press and captures two images in quick succession (illuminating by two separate LEDs controlled by GPIO). The images are processed and then saved.
 
-The folder structure of deployable application is as follows:
+`name` stores the image number of the image last clicked and stores on the device (temporary hack!)
 
-- openDR #Main Folder
+`Fundus_cam.py` stores the class which allows for the creation of object controlling the Picamera. 
 
-	- images #Folder
-		
-		Used for storing all clicked images and vids
-	
-	- static #Folder
-		
-		Used for storing all the static files for flask app like CSS, images etc. 
-		
-		Also has the JQ Keyboard Module
-		
-		-fonts  #Folder
-		
-		-css    #Folder
-		
-		-images #Folder
-		
-		-js     #Folder
-	
-	- templates #Folder
-		
-		Storing all the webpages of the HTML
-	
-	- name #File
-		
-		Stores the image number of the image last clicked and stores on the device
-	
-	- .gitignore #File
-
-	- Fundus_cam.py #File
-		
-		Stores class which allows for the creation of object controlling the Picamer
-		
-		The various functions of the camera are controlled via this file's class
-		
-		It is imported into the fundus_mod3.py to make it work
-
-	- fundus_mod3.py #File
-		
-		Various iterations of code have resulted in such naming of the file
-		
-		It is the integrative module which integrates the device, GUI and camera
-		
-		It has the flask server which is loaded on startup of device
-		
-		Any integrations are to be done from this file unless a major upgrade is being pushed
-
-
-	- simplehttp.sh
-		
-		It creates a python simplehttp server on port 8000 to allow for transfer of files from the device
-		
-		It's a temporary hack and a better method would be employed for it soon enough
-
-	- license.txt
-		
-		File with the MIT LICENSE
-
-	- README.md
-		
-		Primary instruction and information manuel 
+`simplehttp.sh` creates a python simplehttp server on port 8000 to allow for transfer of files from the device.
