@@ -58,7 +58,7 @@ openDR
 `templates` contains all html for the webapp
 
 #### Important Files
-`openDR/fundus_mod3.py` has the main functionality, and integrates the GUI and imaging. This code polls for a button press and captures two images in quick succession (illuminating by two separate LEDs controlled by GPIO). The images are processed and then saved.
+`fundus_mod3.py` has the main functionality, and integrates the GUI and imaging. This code polls for a button press and captures two images in quick succession (illuminating by two separate LEDs controlled by GPIO). The images are processed and then saved.
 
 `name` stores the image number of the image last clicked and stores on the device (temporary hack!)
 
