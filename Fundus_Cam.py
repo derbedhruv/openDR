@@ -13,9 +13,9 @@ import cv2
 import numpy as np
 import io
 
-##############################################################################
-### This class provide access to the picamera and its associated functions ###
-##############################################################################
+###############################################################################
+### This class provides access to the picamera and its associated functions ###
+###############################################################################
 
 class Fundus_Cam(object):
 
@@ -24,7 +24,7 @@ class Fundus_Cam(object):
 
         # initialize the camera 
         self.camera = PiCamera()
-        self.camera.resolution = self.camera.MAX_IMAGE_RESOLUTION
+        self.camera.resolution = self.camera.MAX_RESOLUTION
         self.camera.framerate = framerate
 
         # stream is a file-like type used to store captured images to memory
