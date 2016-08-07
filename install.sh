@@ -72,8 +72,9 @@ fi
 ## TODO: Move all this to cronjob on boot
 ## TODO: All the server logs should be appended into a file
 echo "Setting up OWL server to run on boot..."
+# We first need to setup the pigpiod deamon to run on boot
+(sudo crontab -l; echo "@reboot sudo pigpiod")|sudo crontab -
 (crontab -l; echo "@reboot python /home/pi/openDR/fundus.py >> /home/pi/openDR/flask.log 2>&1")|crontab -
-
 
 
 # Installing chromium browser - required for kiosk mode
