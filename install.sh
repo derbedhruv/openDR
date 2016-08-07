@@ -71,13 +71,10 @@ fi
 # For installing flask setting for pi so that the server starts on boot
 ## TODO: Move all this to cronjob on boot
 ## TODO: All the server logs should be appended into a file
-echo "Setting up Flask server on boot..."
-(echo "@reboot sudo pigpiod") | crontab -e
-(echo "@reboot flask run") | crontab -e
+echo "Setting up OWL server to run on boot..."
+(crontab -l; echo "@reboot python /home/pi/openDR/fundus.py >> /home/pi/openDR/flask.log 2>&1")|crontab -
 
-# echo "sudo pigpiod" >> ~/.bashrc	# Need to run the deamon
-# echo "export FLASK_APP=/home/pi/openDR/fundus_mod3.py" >> ~/.bashrc
-# echo "flask run &" >> ~/.bashrc
+
 
 # Installing chromium browser - required for kiosk mode
 wget -qO - http://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
