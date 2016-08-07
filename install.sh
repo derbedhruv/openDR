@@ -66,3 +66,27 @@ else
 fi
 
 ## TODO: Add installer and builder for extra functions!
+
+#For installing flask setting for pi so that the server starts on boot
+
+echo "export FLASK_APP=/home/pi/openDR/fundus_mod3.py" >> ~/.bashrc
+echo "flask run" >> ~/.bashrc
+
+#For installing chromium browser
+wget -qO - http://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
+echo "deb http://dl.bintray.com/kusti8/chromium-rpi jessie main" | sudo tee -a /etc/apt/sources.list
+sudo apt-get update
+sudo apt-get install chromium-browser
+
+
+#For running kiosk mode 
+
+cat <<EOT >> ~/.config/lxsession/LXDE-pi/autostart
+@xset s off
+@xset -dpms
+@xsetsnoblank
+
+@sed­ -i's/"exited_cleanly":false/"exited_cleanly": true/'~/.config/chromium/Default/Preferences
+@chromium­-browser --­­noerrdialogs --­­kiosk 127.0.0.1:8000 --incognito
+
+EOT
