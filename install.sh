@@ -43,6 +43,7 @@ fi
 # picamera
 echo "Checking picamera..."
 sudo pip install --upgrade picamera
+sudo pip install --upgrade picamera[array]
 
 # flask
 echo "Checking Flask..."
@@ -53,12 +54,12 @@ echo "Checking numpy..."
 sudo pip install --upgrade numpy
 
 # Start with cv2
-if pip list | grep -F cv2 >/dev/null; then
+if python -c "import cv2" >/dev/null; then
 	echo "openCV is installed"
 	## TODO: Check version
 	# If it is not proper, then sudo apt-get autoremove libopencv-dev python-opencv
 else
-	echo "cv2 not installed, will proceed to install. This will take upto 4 hours!"
+	echo "OpenCV not installed, will proceed to install automatically. This will take upto 4 hours!"
 	# Download the installer from Manuel's website
 	echo "Fetching installer: built by Manuel Ignacio Lopez Quintero - thanks a lot!"
 	wget https://raw.githubusercontent.com/milq/scripts-ubuntu-debian/master/install-opencv.sh
@@ -67,20 +68,26 @@ fi
 
 ## TODO: Add installer and builder for extra functions!
 
-#For installing flask setting for pi so that the server starts on boot
+# For installing flask setting for pi so that the server starts on boot
+## TODO: Move all this to cronjob on boot
+## TODO: All the server logs should be appended into a file
+echo "Setting up Flask server on boot..."
+(echo "@reboot sudo pigpiod") | crontab -e
+(echo "@reboot flask run") | crontab -e
 
-echo "export FLASK_APP=/home/pi/openDR/fundus_mod3.py" >> ~/.bashrc
-echo "flask run" >> ~/.bashrc
+# echo "sudo pigpiod" >> ~/.bashrc	# Need to run the deamon
+# echo "export FLASK_APP=/home/pi/openDR/fundus_mod3.py" >> ~/.bashrc
+# echo "flask run &" >> ~/.bashrc
 
-#For installing chromium browser
+# Installing chromium browser - required for kiosk mode
 wget -qO - http://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
 echo "deb http://dl.bintray.com/kusti8/chromium-rpi jessie main" | sudo tee -a /etc/apt/sources.list
 sudo apt-get update
 sudo apt-get install chromium-browser
 
 
-#For running kiosk mode 
-
+# Setting up kiosk mode - fullscreen app on boot
+echo "Setting up Kiosk mode"
 cat <<EOT >> ~/.config/lxsession/LXDE-pi/autostart
 @xset s off
 @xset -dpms

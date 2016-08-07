@@ -32,7 +32,7 @@ Details about assembly and parts is given on our [hackaday page](https://hackada
 All dependencies can be installed by running `install.sh`, sudo password would be required if some dependencies are not present. We recommend installing the software on a fresh dedicated rPI.
 
 ## Deploying the application
-The repository must be cloned into the 'home' folder of Raspberry Pi, i.e., `/home/pi/` or just the `~` path. 
+The repository must be cloned into the 'home' folder of Raspberry Pi, i.e., `/home/pi/` or just the `~` path, all environment variables are set with respect to this!
 The name of the user should be **pi** (which is the default on new rPI OS installations).
 
 
