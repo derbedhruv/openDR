@@ -160,7 +160,7 @@ try:
 
     #make a directory of patient's name if it does not exist
     def make_a_dir(pr_t):
-        d= "/home/pi/images/"+pr_t
+        d= "/home/pi/openDR/images/"+pr_t
         if not os.path.exists(d):
             print os.path.dirname(__file__)
             os.mkdir(d)
