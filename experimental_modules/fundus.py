@@ -7,7 +7,7 @@ center=(1386,948)
 radius=804
 
 # constants for erode_thresh()
-threshold_value=65
+threshold_value=65          # emperical
 kernel_size=14
 erosion_iterations=5
 
@@ -15,7 +15,7 @@ erosion_iterations=5
 #function to extract circular region from the given image
 def extract_circles(image):
 
-    #make a null matrix of same dimension as image
+    #make a zeros matrix of same dimension as image
     mask=np.zeros(image.shape[:], dtype=np.uint8)
 
     #draw a white circle in the mask
@@ -43,7 +43,7 @@ def extract_circles(image):
 
     return img_final
 
-# function to erode and threhold a given image
+# function to erode and threshold a given image
 def erode_thresh(image):
 
     image=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
@@ -101,22 +101,11 @@ def ellipse_fit(image,cont_img):
 
     return img_final
 
-#To test the above functions
-test_img=cv2.imread('../test.jpg')
-
-circle=extract_circles(test_img)
-cv2.imshow('extracted circle',imutils.resize(circle,width=432,height=324))
-
-threshed_image=erode_thresh(circle)
-cv2.imshow('eroded and threshed',imutils.resize(threshed_image,width=432,height=324))
-
-final_image=ellipse_fit(circle,threshed_image)
-cv2.imshow('window',imutils.resize(final_image,width=432,height=324))
-
-cv2.waitKey(0)
-
-cv2.destroyAllWindows()
-
-
-
-
+## Combining these functions into one simple, importable function
+# Will take image (filename) as arg and return extracted numpy array
+def extract_fundus(filename):
+    test_img=cv2.imread(filename)
+    circle=extract_circles(test_img)
+    threshed_image=erode_thresh(circle)
+    return ellipse_fit(circle,threshed_image)
+    
