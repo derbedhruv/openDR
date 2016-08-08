@@ -116,6 +116,10 @@ else
 	
 fi
 
+# Last: install imutils for python, used in the image processing code
+## TODO: Remove this dependency or use other functions
+sudo apt-get install --upgrade imutils
+
 ## TODO: Add installer and builder for extra functions!
 
 # For installing flask setting for pi so that the server starts on boot

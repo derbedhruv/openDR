@@ -102,7 +102,7 @@ def ellipse_fit(image,cont_img):
     return img_final
 
 #To test the above functions
-test_img=cv2.imread('owl1.jpg')
+test_img=cv2.imread('../test.jpg')
 
 circle=extract_circles(test_img)
 cv2.imshow('extracted circle',imutils.resize(circle,width=432,height=324))
