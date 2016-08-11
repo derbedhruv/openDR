@@ -141,6 +141,13 @@ sudo apt-get install -y chromium-browser
 ## TODO: Install drivers for the touch screen display
 
 # Setting up kiosk mode - fullscreen app on boot
+## INSTRUCTIONS TO GET OUT OF KIOSK MODE!
+# Copy the contents of autostart from /etc/xdg/lxsession/LXDE-pi to local
+# use the command:
+# cp /etc/xdg/lxsession/LXDE-pi/autostart /home/pi/.config/lxsession/LXDE-pi/autostart
+# then do a sudo reboot
+#
+
 echo "Setting up Kiosk mode"
 cat <<EOT >> ~/.config/lxsession/LXDE-pi/autostart
 @xset s off
