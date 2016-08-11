@@ -29,6 +29,8 @@ from Fundus_Cam import Fundus_Cam
 import cv2
 import numpy as np
 
+# since the folder locations are fixed, hard-coding filesystem locations
+base_folder = '/home/pi/openDR'
 
 try:
 
@@ -36,6 +38,7 @@ try:
 
     #create flask app
     app = Flask(__name__)
+    
     #tokens would have the value for each but
     tokens=['Flip' , 'Vid' , 'Click' , 'Switch' , 'Shut' ]
 
@@ -113,11 +116,11 @@ try:
             #  in the file to the pic taken and increment it
             ## This is done so that each pic taken has a unique name and also no
             #  overwriting happens
-            file_r = open(os.path.dirname(__name__)+'name','r')
+            file_r = open(base_folder + '/name','r')
             picn = (int)(file_r.read())
             picn = picn+1
             file_r.close()
-            file_w = open(os.path.dirname(__name__)+'name','w')
+            file_w = open(base_folder + '/name','w')
             file_w.write(str(picn))
             file_w.close()
 
@@ -127,40 +130,35 @@ try:
                 for img in images:
                     image=cv2.imdecode(img,1)
                     #image=get_fundus(image)
-                    cv2.imwrite(os.path.dirname(__file__) + "/images/" 
-                                                          + processed_text 
-                                                          + '/' 
-                                                          + processed_text 
-                                                          + '_' + str(picn) 
-                                                          + '_' + str(no) 
-                                                          + '.jpg',image)
+                    cv2.imwrite(base_folder + "/images/" 
+                                  + processed_text 
+                                  + '/' 
+                                  + processed_text 
+                                  + '_' + str(picn) 
+                                  + '_' + str(no) 
+                                  + '.jpg',image)
                     no=no+1
             else:
                 image=cv2.imdecode(images,1)
                 #image=get_fundus(image)
-                cv2.imwrite(os.path.dirname(__file__) + "/images/" 
-                                                      + processed_text 
-                                                      + '/' 
-                                                      + processed_text 
-                                                      +'_' + str(picn) 
-                                                      + '_' + str(no) 
-                                                      + '.jpg',image)  
+                cv2.imwrite(    base_folder + "/images/" 
+                                          + processed_text 
+                                          + '/' 
+                                          + processed_text 
+                                          +'_' + str(picn) 
+                                          + '_' + str(no) 
+                                          + '.jpg',image)  
 		no=no+1
     #-------------------Flask implementation ends here--------------------#
 
-
-
-
-
-
-
+    #--------------NO MAN'S LAND. ABANDON ALL HOPE YE WHO ENTER-----------#
 
     #......Below this line, all the functions not having flask lie.....#
 
 
     #make a directory of patient's name if it does not exist
     def make_a_dir(pr_t):
-        d= "/home/pi/openDR/images/"+pr_t
+        d = base_folder + "/images/"+pr_t
         if not os.path.exists(d):
             print os.path.dirname(__file__)
             os.mkdir(d)
