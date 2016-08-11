@@ -138,6 +138,8 @@ echo "deb http://dl.bintray.com/kusti8/chromium-rpi jessie main" | sudo tee -a /
 sudo apt-get install -y chromium-browser
 
 
+## TODO: Install drivers for the touch screen display
+
 # Setting up kiosk mode - fullscreen app on boot
 echo "Setting up Kiosk mode"
 cat <<EOT >> ~/.config/lxsession/LXDE-pi/autostart
@@ -146,11 +148,9 @@ cat <<EOT >> ~/.config/lxsession/LXDE-pi/autostart
 @xsetsnoblank
 
 @sed­ -i's/"exited_cleanly":false/"exited_cleanly": true/'~/.config/chromium/Default/Preferences
-@chromium­-browser --­­noerrdialogs --­­kiosk 127.0.0.1:8000 --incognito
+@chromium-browser --­­noerrdialogs --­­kiosk 127.0.0.1:5000 --incognito
 
 EOT
-
-## TODO: Install drivers for the touch screen display
 
 # Finally should reboot the pi
 # sudo reboot
