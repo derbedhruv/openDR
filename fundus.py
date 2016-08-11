@@ -29,6 +29,11 @@ from Fundus_Cam import Fundus_Cam
 import cv2
 import numpy as np
 
+# Import the modules needed for image processing and ML grading
+import sys
+sys.path.insert(0, './modules/')    # adding modules folder to the start of python search path
+import process      # our processing module
+
 # since the folder locations are fixed, hard-coding filesystem locations
 base_folder = '/home/pi/openDR'
 
