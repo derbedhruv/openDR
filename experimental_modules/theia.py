@@ -4,9 +4,13 @@
 import requests		# pip install requests if you don't have it 
 import json
 
+key = ''
 # Get the key from external file
-keyfile = open('key')
-key = keyfile.readline()
+try:
+    keyfile = open('key')
+    key = keyfile.readline()
+except IOError:
+    print "CANNOT FIND KEY FOR THEIA. PLEASE CHECK."
 
 def grade_request(file):
     # makes the request to the theia interface and returns the grade of that image.
@@ -16,6 +20,7 @@ def grade_request(file):
 	response = requests.post(uri, files={'file': file})
 	
 	if (response.status_code == 200):
+                # TODO: check for BAD API KEY
 		# print "response OK"
 		# convert response.text to json and parse as dictionary
 		data = json.loads(response.text)
@@ -23,6 +28,7 @@ def grade_request(file):
 		return grade
 	else:
 		return -1
+
 
 ## BEGIN THE REQUEST:
 # print grade_request(open('normal1.jpg', 'rb'))
