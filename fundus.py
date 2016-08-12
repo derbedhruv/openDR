@@ -31,7 +31,9 @@ import numpy as np
 
 # Import the modules needed for image processing and ML grading
 import sys
+
 sys.path.insert(0, './modules/')    
+
 # adding modules folder to the start of python search path
 import process      # our processing module
 
@@ -149,13 +151,13 @@ try:
             file_w = open(base_folder + '/name','w')
             file_w.write(str(picn))
             file_w.close()
-            last_img = = base_folder + "/images/" 
-                                          + processed_text 
-                                          + '/' 
-                                          + processed_text 
-                                          +'_' + str(picn) 
-                                          + '_' + str(no) 
-                                          + '.jpg',image
+            last_img = (base_folder + "/images/" 
+                                   + processed_text 
+                                   + '/' 
+                                   + processed_text 
+                                   +'_' + str(picn) 
+                                   + '_' + str(no) 
+                                   + '.jpg',image)
             # Save image in the particular directory with the given file name
             if type(images) is list:
             
