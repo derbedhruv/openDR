@@ -31,11 +31,15 @@ import numpy as np
 
 # Import the modules needed for image processing and ML grading
 import sys
-sys.path.insert(0, './modules/')    # adding modules folder to the start of python search path
+sys.path.insert(0, './modules/')    
+# adding modules folder to the start of python search path
 import process      # our processing module
 
 # since the folder locations are fixed, hard-coding filesystem locations
 base_folder = '/home/pi/openDR'
+
+#a dynamic grading key
+grade_val = 'Grade'
 
 try:
 
@@ -45,7 +49,7 @@ try:
     app = Flask(__name__)
     
     #tokens would have the value for each but
-    tokens=['Flip' , 'Vid' , 'Click' , 'Switch' , 'Shut' ]
+    tokens=['Flip' , 'Vid' , 'Click' , 'Switch' , grade_val , 'Shut' ]
 
     #URL setter
     @app.route( '/' )
@@ -58,6 +62,8 @@ try:
         #processesd_text stores the MR_number
         global processed_text
         global obj_state
+        global last_img
+        last_img =  '1'
         obj_state = True
 
         #input for MR Number into 'text' variable
@@ -101,6 +107,15 @@ try:
                     decode_image(obj_fc.images)
                     return render_template('capture_simple.html', params=tokens)
 
+                #if photo has to be taken
+                if d == grade_val:
+                    if last_img == '1':
+                        return render_template('capture_simple.html', params=tokens)
+
+                    if last_img != '1':
+                        grade_val = str(grade(last_img))
+
+
                 #if stop button is pressed
                 if d == 'Switch':
                     if obj_state == True:
@@ -112,6 +127,9 @@ try:
                 if d == 'Shut':
                     shut_down()
                     return render_template('capture_simple.html', params=tokens)
+
+
+
         
     def decode_image(images):
         #name=raw_input("enter the name to be saved")
@@ -135,7 +153,7 @@ try:
                 for img in images:
                     image=cv2.imdecode(img,1)
                     #image=get_fundus(image)
-                    cv2.imwrite(base_folder + "/images/" 
+                    cv2.imwrite( last_img = base_folder + "/images/" 
                                   + processed_text 
                                   + '/' 
                                   + processed_text 
@@ -146,7 +164,7 @@ try:
             else:
                 image=cv2.imdecode(images,1)
                 #image=get_fundus(image)
-                cv2.imwrite(    base_folder + "/images/" 
+                cv2.imwrite( last_img = base_folder + "/images/" 
                                           + processed_text 
                                           + '/' 
                                           + processed_text 
