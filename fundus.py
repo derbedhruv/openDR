@@ -35,7 +35,7 @@ import sys
 sys.path.insert(0, './modules/')    
 
 # adding modules folder to the start of python search path
-#import process      # our processing module
+import process      # our processing module
 from process import grade
 # since the folder locations are fixed, hard-coding filesystem locations
 base_folder = '/home/pi/openDR'
