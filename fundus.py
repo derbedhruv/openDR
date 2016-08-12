@@ -41,6 +41,7 @@ base_folder = '/home/pi/openDR'
 #a dynamic grading key
 grade_val = 'Grade'
 
+last_img =  '1'
 try:
 
     #-------------------Flask implementation starts here-------------------#
@@ -63,7 +64,7 @@ try:
         global processed_text
         global obj_state
         global last_img
-        last_img =  '1'
+  
         obj_state = True
 
         #input for MR Number into 'text' variable
@@ -83,6 +84,7 @@ try:
     #captureSimple : to displey simple image    
     @app.route('/captureSimple', methods=['GET','POST'])
     def captureSimpleFunc():
+        global last_img
         if request.method == 'GET':
             return render_template('capture_simple.html',params=tokens)
         if request.method == 'POST':
@@ -134,6 +136,7 @@ try:
     def decode_image(images):
         #name=raw_input("enter the name to be saved")
             global no
+            global last_img
             no=1
             ## This part of code is to open the file 'name' and add the number
             #  in the file to the pic taken and increment it
