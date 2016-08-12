@@ -149,31 +149,25 @@ try:
             file_w = open(base_folder + '/name','w')
             file_w.write(str(picn))
             file_w.close()
-
+            last_img = = base_folder + "/images/" 
+                                          + processed_text 
+                                          + '/' 
+                                          + processed_text 
+                                          +'_' + str(picn) 
+                                          + '_' + str(no) 
+                                          + '.jpg',image
             # Save image in the particular directory with the given file name
             if type(images) is list:
             
                 for img in images:
                     image=cv2.imdecode(img,1)
                     #image=get_fundus(image)
-                    cv2.imwrite( last_img = base_folder + "/images/" 
-                                  + processed_text 
-                                  + '/' 
-                                  + processed_text 
-                                  + '_' + str(picn) 
-                                  + '_' + str(no) 
-                                  + '.jpg',image)
+                    cv2.imwrite( last_img )
                     no=no+1
             else:
                 image=cv2.imdecode(images,1)
                 #image=get_fundus(image)
-                cv2.imwrite( last_img = base_folder + "/images/" 
-                                          + processed_text 
-                                          + '/' 
-                                          + processed_text 
-                                          +'_' + str(picn) 
-                                          + '_' + str(no) 
-                                          + '.jpg',image)  
+                cv2.imwrite( last_img )  
 		no=no+1
     #-------------------Flask implementation ends here--------------------#
 
