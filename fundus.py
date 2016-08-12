@@ -35,8 +35,8 @@ import sys
 sys.path.insert(0, './modules/')    
 
 # adding modules folder to the start of python search path
-import process      # our processing module
-
+#import process      # our processing module
+from process import grade
 # since the folder locations are fixed, hard-coding filesystem locations
 base_folder = '/home/pi/openDR'
 
@@ -87,6 +87,7 @@ try:
     @app.route('/captureSimple', methods=['GET','POST'])
     def captureSimpleFunc():
         global last_img
+        global grade_val
         if request.method == 'GET':
             return render_template('capture_simple.html',params=tokens)
         if request.method == 'POST':
@@ -139,6 +140,7 @@ try:
         #name=raw_input("enter the name to be saved")
             global no
             global last_img
+            global grade_val
             no=1
             ## This part of code is to open the file 'name' and add the number
             #  in the file to the pic taken and increment it
@@ -157,19 +159,19 @@ try:
                                    + processed_text 
                                    +'_' + str(picn) 
                                    + '_' + str(no) 
-                                   + '.jpg',image)
+                                   + '.jpg')
             # Save image in the particular directory with the given file name
             if type(images) is list:
             
                 for img in images:
                     image=cv2.imdecode(img,1)
                     #image=get_fundus(image)
-                    cv2.imwrite( last_img )
+                    cv2.imwrite( last_img, image )
                     no=no+1
             else:
                 image=cv2.imdecode(images,1)
                 #image=get_fundus(image)
-                cv2.imwrite( last_img )  
+                cv2.imwrite( last_img,image )  
 		no=no+1
     #-------------------Flask implementation ends here--------------------#
 

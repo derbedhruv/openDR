@@ -93,9 +93,6 @@ class Fundus_Cam(object):
     def stop(self):
         self.stopped=True
 
-    def __del__(self):
-        camera.close()
-
 
         
 ## decode function
