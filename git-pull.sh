@@ -1,3 +1,3 @@
 #!/bin/bash
 
-git pull https://github.com/derbedhruv/openDR
+git pull --rebase https://github.com/derbedhruv/openDR
