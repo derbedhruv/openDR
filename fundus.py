@@ -32,7 +32,7 @@ import numpy as np
 # Import the modules needed for image processing and ML grading
 import sys
 
-sys.path.insert(0, './modules/')    
+sys.path.insert(0, '/home/pi/openDR/modules/')    
 
 # adding modules folder to the start of python search path
 import process      # our processing module
@@ -119,6 +119,7 @@ try:
 
                     if last_img != '1':
                         grade_val = str(grade(last_img))
+                        print "graded image at " + last_img + " as "+ str(grade_val)
 
 
                 #if stop button is pressed
