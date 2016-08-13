@@ -83,7 +83,7 @@ try:
         return redirect(url_for('captureSimpleFunc'))
 
 
-    #captureSimple : to displey simple image    
+    #captureSimple : to display simple image    
     @app.route('/captureSimple', methods=['GET','POST'])
     def captureSimpleFunc():
         global last_img
@@ -120,6 +120,7 @@ try:
                     if last_img != '1':
                         grade_val = str(grade(last_img))
                         print "graded image at " + last_img + " as "+ str(grade_val)
+                        return render_template('capture_simple.html', params=tokens)
 
 
                 #if stop button is pressed
