@@ -14,4 +14,4 @@ import theia
 def grade(filename):
     output = filename[:-4] + '_processed.jpg'
     cv2.imwrite(output, remove_glare.remove_glare(extract_fundus(filename)))
-    return theia.grade_request(open(output))
+    return theia.grade_request(output)
