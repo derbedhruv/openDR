@@ -118,6 +118,7 @@ try:
 
                     if last_img != '1':
                         grade_val = str(grade(last_img))
+                        print "the grade is " + grade_val
                         return render_template('capture_simple.html', params=tokens)
 
 
