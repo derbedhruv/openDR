@@ -119,7 +119,6 @@ try:
 
                     if last_img != '1':
                         grade_val = str(grade(last_img))
-                        print "graded image at " + last_img + " as "+ str(grade_val)
                         return render_template('capture_simple.html', params=tokens)
 
 
@@ -219,12 +218,10 @@ try:
         
 
 #exception module not working as desired
-except:
-    render_template('''<html>
-                        <body>
-                        Error occured: We will now shut down
-                        </body>
-                        </html>''')
+except :
+    e = sys.exc_info()[0]
+    write_to_page( "<body>Error occured: We will now shut down <p>%s</p></body>" % e )
+    
     #wait for 3 seconds
     time.sleep(3)
     #call shutdown function
@@ -240,3 +237,4 @@ def shut_down():
     
 if __name__ == '__main__':
     app.run()
+ 
