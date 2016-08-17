@@ -31,7 +31,6 @@ import numpy as np
 
 # Import the modules needed for image processing and ML grading
 import sys
-
 sys.path.insert(0, '/home/pi/openDR/modules/')    
 
 # adding modules folder to the start of python search path

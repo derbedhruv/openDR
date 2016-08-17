@@ -10,7 +10,7 @@ def grade_request(f):
 	# argument - file object
 	# Get the key from external file
         try:
-            keyfile = open('key')
+            keyfile = open('/home/pi/openDR/key')
             key = keyfile.readline()
         except IOError:
             print "CANNOT FIND KEY FOR THEIA. PLEASE CHECK."

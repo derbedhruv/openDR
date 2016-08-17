@@ -1,5 +1,7 @@
 ## The entire python pipeline to process the image
 import cv2
+import sys
+sys.path.insert(0, '/home/pi/openDR/modules/') 
 from extract import extract_fundus
 import remove_glare
 import theia
