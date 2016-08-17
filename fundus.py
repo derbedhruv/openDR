@@ -117,8 +117,9 @@ try:
                         return render_template('capture_simple.html', params=tokens)
 
                     if last_img != '1':
-                        grade_val = str(grade(last_img))
-                        print "the grade is " + grade_val
+                        grading_val(last_img)
+                        # grade_val = str(grade(last_img))
+                        # print "the grade is " + grade_val
                         return render_template('capture_simple.html', params=tokens)
 
 
@@ -133,7 +134,13 @@ try:
                 if d == 'Shut':
                     shut_down()
                     return render_template('capture_simple.html', params=tokens)
-
+    
+    # A seperate function for getting the value from theia and assigning it to grade_val
+    def grading_val(last_img):
+        global grade_val
+        grade_val = str(grade(last_img))
+        print "the grade is " + grade_val
+        pass
 
 
         
