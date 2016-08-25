@@ -3,9 +3,9 @@
 <html>
 <head>
 	<!-- Auto refresh meta tag to allow updation of grade_val value-->
-    <meta http-equiv="refresh" content="10">
-	<title>Capture_Image</title>
-	<style>
+  <meta http-equiv="refresh" content="10">
+  <title>Capture_Image</title>
+<style>
 	button{
 	width: 70px;
 	height : 65px;
@@ -25,20 +25,21 @@ button:hover{
 body{
 	background-color: #000000;
 }
-	</style>
+</style>
 </head>
 <body>
-<div id="buttonarea">
-<table border="0" class="table">
-{% for o in params %}
-<tr>
-<td>
-<form method="post">
-<button class="button_style" name="d" value="{{o}}"> {{o}}</button>
-<td>
-<tr>
-{% endfor %}
-</div>
+  <div id="buttonarea">
+    <table border="0" class="table">
+      {% for o in params %}
+      <tr>
+        <td>
+          <form method="post">
+            <button class="button_style" name="d" value="{{o}}"> {{o}}</button>
+        </td>
+      </tr>
+      {% endfor %}
+  </div>
+  <div id="grade">{{ grades['grade'] }}</div>
 </body>
 </html>	
 

@@ -88,7 +88,7 @@ try:
         global last_img
         global grade_val
         if request.method == 'GET':
-            return render_template('capture_simple.html',params=tokens)
+            return render_template('capture_simple.html', params=tokens, grades={})
         if request.method == 'POST':
             if "d" in request.form.keys():
                 d=request.form['d']
@@ -97,7 +97,7 @@ try:
                 if d == 'Click':
                     obj_fc.capture()
                     decode_image(obj_fc.image)
-                    return render_template('capture_simple.html', params=tokens)
+                    return render_template('capture_simple.html', params=tokens, grades={})
 
                 #If flip button pressed
                 if d == 'Flip':
@@ -120,7 +120,7 @@ try:
                         # grading_val(last_img)
                         grade_val = str(grade(last_img))
                         print "the grade is " + grade_val
-                        return render_template('capture_simple.html', params=tokens)
+                        return render_template('capture_simple.html', params=tokens, grades={'grade':grade_val})
 
 
                 #if stop button is pressed
