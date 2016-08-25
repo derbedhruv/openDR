@@ -117,9 +117,9 @@ try:
                         return render_template('capture_simple.html', params=tokens)
 
                     if last_img != '1':
-                        grading_val(last_img)
-                        # grade_val = str(grade(last_img))
-                        # print "the grade is " + grade_val
+                        # grading_val(last_img)
+                        grade_val = str(grade(last_img))
+                        print "the grade is " + grade_val
                         return render_template('capture_simple.html', params=tokens)
 
 
@@ -243,5 +243,5 @@ def shut_down():
         print output    
     
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
  
