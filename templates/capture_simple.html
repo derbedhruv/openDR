@@ -3,7 +3,6 @@
 <html>
 <head>
 	<!-- Auto refresh meta tag to allow updation of grade_val value-->
-  <meta http-equiv="refresh" content="10">
   <title>Capture_Image</title>
 <style>
 	button{
@@ -25,9 +24,20 @@ button:hover{
 body{
 	background-color: #000000;
 }
+#grade {
+  background:white;
+  position:fixed;
+  right:0;
+  height: 100%;
+  width:10%;
+  padding:5px;
+  display:block;
+  text-align: right;
+}
 </style>
 </head>
 <body>
+  <div id="grade">{{ grades['grade'] }}</div>
   <div id="buttonarea">
     <table border="0" class="table">
       {% for o in params %}
@@ -39,12 +49,6 @@ body{
       </tr>
       {% endfor %}
   </div>
-  <div id="grade">{{ grades['grade'] }}</div>
 </body>
 </html>	
 
-<!--
-
-src="{{ url_for('static',filename='camICO.jpg')}}"
-
--->
