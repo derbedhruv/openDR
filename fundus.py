@@ -56,6 +56,7 @@ try:
     #URL setter
     @app.route( '/' )
     def my_form():
+    	normalON()
         return render_template( "index.html" )
 
     #MR number input is accepted here
