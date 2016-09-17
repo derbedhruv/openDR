@@ -2,53 +2,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- Auto refresh meta tag to allow updation of grade_val value-->
   <title>Capture_Image</title>
-<style>
-	button{
-	width: 70px;
-	height : 65px;
-	margin-left: 2px;
-	border: none;
-	background-color: #33cccc;
-	text-align:center;
-	color: white;
-}
-button:active{
-	background-color:#00ff99
-
-}
-button:hover{
-	background-color: #009999;
-}
-body{
-	background-color: #000000;
-}
-#grade {
-  background:white;
-  position:fixed;
-  right:0;
-  height: 100%;
-  width:10%;
-  padding:5px;
-  display:block;
-  text-align: right;
-}
-</style>
-</head>
-<body>
-  <div id="grade">{{ grades['grade'] }}</div>
-  <div id="buttonarea">
-    <table border="0" class="table">
-      {% for o in params %}
-      <tr>
+  <!--Importing Bootstrap here-->
+  <link href="{{ url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet">
+  <style>
+        .container-fluid{
+	    max-width: 800px;
+	    padding: 2px;   
+        }
+        button{
+	    width: 70px;
+            height : 65px;
+	    margin-left: 2px;
+	    border: none;
+	    background-color: #33cccc;
+	    text-align:center;
+	    color: white;
+            } 
+        button:active{
+	    background-color:#00ff99
+            }
+        button:hover{
+	    background-color: #009999;
+            }
+        body{
+	    background-color: #000000;
+            }
+        #grade {
+            background:black;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            position:fixed;
+            right:0;
+            height: 100%;
+            width:10%;
+            padding-top: 40px;
+            font-family: Helvetica;
+            display:block;
+            text-align: right;
+            }
+  </style>
+  </head>
+  <body>
+     <div class="container-fluid" > 
+      <div  id="grade" class="">{{ grades['grade'] }}</div>
+      <div id="buttonarea">
+        <table border="0" class="table">
+          {% for o in params %}
+        <tr>
         <td>
           <form method="post">
             <button class="button_style" name="d" value="{{o}}"> {{o}}</button>
         </td>
-      </tr>
+        </tr>
       {% endfor %}
-  </div>
-</body>
+      </div>
+    </div>
+  </body>
 </html>	
 
