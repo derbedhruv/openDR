@@ -201,8 +201,8 @@ try:
     # Names are based on the colours of the wires connecting to the LEDs
     # NOTE: Both the orangeyellow and bluegreen 
     #       LEDs are active LOW, hence 0 is ON and vice versa
-    orangeyellow = 2
-    bluegreen  = 3
+    orangeyellow = 14
+    bluegreen  = 15
     switch = 4
     i=1	# initial_counter
 
@@ -244,5 +244,5 @@ def shut_down():
         print output    
     
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', threaded = True)
  
