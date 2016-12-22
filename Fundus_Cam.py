@@ -1,9 +1,9 @@
-                        #############################
-                        ## Fundus_Cam.py           ##
-                        ## Primary Author: Ebin    ##
-                        ## Version : 1.0           ##
-			##Contributor: Ayush Yadav ##
-                        #############################
+##############################################################################
+#########################  Fundus_Cam.py             #########################
+#########################  Primary Author: Ebin      #########################
+#########################  Version : 1.0             #########################
+#########################  Contributor: Ayush Yadav  #########################
+##############################################################################
 
 
 from picamera.array import PiRGBArray
@@ -13,9 +13,9 @@ import cv2
 import numpy as np
 import io
 
-#########################################################################
-# This class provide access to the picamera and its associated functions#
-#########################################################################
+###############################################################################
+### This class provides access to the picamera and its associated functions ###
+###############################################################################
 
 class Fundus_Cam(object):
 
@@ -24,7 +24,7 @@ class Fundus_Cam(object):
 
         # initialize the camera 
         self.camera = PiCamera()
-        self.camera.resolution = self.camera.MAX_IMAGE_RESOLUTION
+        self.camera.resolution = self.camera.MAX_RESOLUTION
         self.camera.framerate = framerate
 
         # stream is a file-like type used to store captured images to memory
@@ -34,8 +34,9 @@ class Fundus_Cam(object):
         # this determines the vertical flip_state of the picamera
         # this can be toggled by Fundus_Cam.flip_cam()
         self.flip_state=False
-        
-        # This is a list to store images captured in Fundus_Cam.continuous_capture()
+
+        # This is a list to store images captured 
+        # in Fundus_Cam.continuous_capture() 
         self.images=[]
         self.camera.start_preview()
 
@@ -92,8 +93,12 @@ class Fundus_Cam(object):
     def stop(self):
         self.stopped=True
 
-    def __del__(self):
-        camera.close()
+
+        
+## decode function
+## decode,process and save the grabbed image
+## the decode function has been moved to the fundus_mod3.py file for easy access
+            
 
 ##    def decode_image(images,path_sen,name):
 ##    #name=raw_input("enter the name to be saved")
@@ -109,17 +114,13 @@ class Fundus_Cam(object):
 ##            image=cv2.imdecode(images,1)
 ##            #image=get_fundus(image)
 ##            cv2.imwrite(path_sen + name + '.jpg',image)   
+
+
+##############################################################################   
+#####################    End of Class Implementation  ########################
+##############################################################################
+
    
-######        End of Class Implementation  ############
-#######################################################
-
-    
-        
-
-# decode,process and save the grabbed image
-
-            
-        
 
 # for debugging
 if __name__=='__main__':
